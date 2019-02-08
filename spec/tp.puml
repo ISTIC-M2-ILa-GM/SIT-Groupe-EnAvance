@@ -1,0 +1,36 @@
+@startuml
+skinparam titleTextColor red
+
+actor user
+database database_nosql
+component serveur
+entity drone
+
+title Projet SIT
+
+legend top left
+Objectif :
+*Commande un drone pour atteindre un point d'intérêt et capturer une image
+*Stocker toutes informations acquises pendant une mission
+*Afficher sur carte de bilan de la mission
+
+Contraintes
+*Missions stockées en DBs
+*DB type NoSQL
+
+Attendu à la fin de SIT :
+*Un petit compte rendu .txt/.md par personne du travail fait, technos utilisées, 1 page MAX
+*Une présentation type google slides pour le groupe avec l'état d'avancement de chaque partie et les résultats
+endlegend
+
+
+file db_info
+
+user --> serveur : zones à inspecter
+serveur --> user : données de la mission courante
+
+serveur <--> database_nosql
+
+serveur --> drone : commandes (dronekit.io)
+drone --> serveur : télémétrie (position)/image/vidéo
+@enduml

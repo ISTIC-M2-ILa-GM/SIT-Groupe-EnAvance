@@ -1,4 +1,4 @@
-package lapin.istic.com.lapin_android;
+package lapin.istic.com.lapin_android.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -22,22 +22,28 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
+import lapin.istic.com.lapin_android.R;
+
 public class LocationActivity extends AppCompatActivity
         implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;
     private LocationManager locationManager;
+    private String hauteur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_location);
+        hauteur = getIntent().getStringExtra("hauteurIntent");
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+
+
     }
 
 
@@ -107,6 +113,17 @@ public class LocationActivity extends AppCompatActivity
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             createMarker(48.117266, -1.6777926, "Rennes", "Bretagne");
             createMarker(48.8534, 2.3488, "Paris", "Ici c'est Paris!");
+
+            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng point) {
+                    //Do your stuff with LatLng here
+                    //Then pass LatLng to other activity
+                    Toast.makeText(
+                            getBaseContext(), "Map clicked: \n [" + point.latitude + " / " + point.longitude + " / "+ hauteur + "]", Toast.LENGTH_SHORT).show();
+                    createMarker(point.latitude ,  point.longitude, "Map clicked", "new Marker");
+                }
+            });
         }
     }
 

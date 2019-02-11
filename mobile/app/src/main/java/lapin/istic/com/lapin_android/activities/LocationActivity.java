@@ -5,6 +5,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+
+import lapin.istic.com.lapin_android.model.*;
+
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +26,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lapin.istic.com.lapin_android.R;
@@ -33,6 +37,7 @@ public class LocationActivity extends AppCompatActivity
     private GoogleMap googleMap;
     private LocationManager locationManager;
     private String hauteur;
+    private List<Point> listPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +50,7 @@ public class LocationActivity extends AppCompatActivity
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
-
-
+        listPoint = new ArrayList<>();
     }
 
 
@@ -114,8 +118,6 @@ public class LocationActivity extends AppCompatActivity
             googleMap.setIndoorEnabled(true);
             googleMap.setBuildingsEnabled(true);
             googleMap.getUiSettings().setZoomControlsEnabled(true);
-            createMarker(48.117266, -1.6777926, "Rennes", "Bretagne");
-            createMarker(48.8534, 2.3488, "Paris", "Ici c'est Paris!");
 
             googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
@@ -123,10 +125,15 @@ public class LocationActivity extends AppCompatActivity
                     //Do your stuff with LatLng here
                     //Then pass LatLng to other activity
                     Toast.makeText(
-                            getBaseContext(), "Map clicked: \n [" + point.latitude + " / " + point.longitude + " / "+ hauteur + "]", Toast.LENGTH_SHORT).show();
-                    createMarker(point.latitude ,  point.longitude, "Map clicked", "new Marker");
+                            getBaseContext(), "Map clicked: \n [" + point.latitude + " / " + point.longitude + " / " + hauteur + "]", Toast.LENGTH_SHORT).show();
+                    createMarker(point.latitude, point.longitude, "Hauteur: " + hauteur, "new Marker");
+                    //TODO Add points to List
+                    listPoint.add(new Point(point.latitude, point.longitude, Double.parseDouble(hauteur)));
+                    Log.d("ListPoints", listPoint.toString());
                 }
             });
+
+
         }
     }
 

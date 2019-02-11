@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import SIT.backend.dto.PointDto;
-import SIT.backend.dto.Points;
+import SIT.backend.dto.PointDTO;
+import SIT.backend.dto.PointsListDTO;
 import SIT.backend.entity.Mission;
 import SIT.backend.repository.MissionRepository;
 import SIT.backend.service.NextSequenceService;
@@ -31,13 +31,13 @@ public class Controller {
 	 */
 	@PostMapping("")
 	@ResponseBody
-	public Integer addMission(@RequestBody Points pointsRecus) {
+	public Integer addMission(@RequestBody PointsListDTO pointsRecus) {
 		// intialisé l'objet Mission avant de le persister et retourner son id
 		Mission mission = new Mission();
 		//traiter les points reçus
 		List<Point> points = new ArrayList<Point>();
 		int i =0;
-		for(PointDto ptd : pointsRecus.getPoints()) {
+		for(PointDTO ptd : pointsRecus.getPoints()) {
 			//créer notre objet point qui contient toutes les infos
 			Point pt = new Point(ptd.getX(),ptd.getY(),ptd.getZ(),null,i);
 			//rajouter le dans la liste

@@ -1,10 +1,10 @@
 package SIT.backend.dto;
 
-public class PointDto {
+public class PointDTO {
 
 	long x, y, z;
 
-	public PointDto(long x, long y, long z) {
+	public PointDTO(long x, long y, long z) {
 		super();
 		this.x = x;
 		this.y = y;

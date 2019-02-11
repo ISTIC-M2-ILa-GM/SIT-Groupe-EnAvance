@@ -26,6 +26,7 @@ public class Controller {
 	MissionRepository missionRepository;
 	@Autowired
 	NextSequenceService nextSequenceService;
+	
 	/**
 	 * Renvoyer la liste des points d'une mission
 	 */

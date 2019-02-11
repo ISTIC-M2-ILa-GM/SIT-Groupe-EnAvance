@@ -6,6 +6,11 @@ public class PointsListDTO {
 
 	List<PointDTO> points;
 
+	public PointsListDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public PointsListDTO(List<PointDTO> points) {
 		super();
 		this.points = points;

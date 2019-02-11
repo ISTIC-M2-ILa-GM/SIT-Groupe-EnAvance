@@ -4,6 +4,12 @@ public class PointDTO {
 
 	long x, y, z;
 
+	
+	public PointDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public PointDTO(long x, long y, long z) {
 		super();
 		this.x = x;

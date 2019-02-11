@@ -5,9 +5,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
-
 import lapin.istic.com.lapin_android.model.*;
-
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -25,12 +22,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import lapin.istic.com.lapin_android.R;
 
+/**
+ * @author KADRI Noureddine
+ */
 public class LocationActivity extends AppCompatActivity
         implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
@@ -52,7 +50,6 @@ public class LocationActivity extends AppCompatActivity
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
         listPoint = new ArrayList<>();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,6 +74,18 @@ public class LocationActivity extends AppCompatActivity
                 return true;
             case R.id.terrain_map:
                 googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                return true;
+            case R.id.send_drone:
+                DronePath dronePath = new DronePath();
+                if (listPoint.isEmpty()) {
+                    Toast.makeText(getApplicationContext(),
+                            "Cannot Send Drone! \n No points selected!", Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    dronePath.setPoints(listPoint);
+
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -124,12 +133,13 @@ public class LocationActivity extends AppCompatActivity
                 public void onMapClick(LatLng point) {
                     //Do your stuff with LatLng here
                     //Then pass LatLng to other activity
-                    Toast.makeText(
-                            getBaseContext(), "Map clicked: \n [" + point.latitude + " / " + point.longitude + " / " + hauteur + "]", Toast.LENGTH_SHORT).show();
-                    createMarker(point.latitude, point.longitude, "Hauteur: " + hauteur, "new Marker");
+                    createMarker(point.latitude, point.longitude, "Hauteur: " + hauteur, "[" + point.latitude + "," + point.latitude + "]");
                     //TODO Add points to List
                     listPoint.add(new Point(point.latitude, point.longitude, Double.parseDouble(hauteur)));
-                    Log.d("ListPoints", listPoint.toString());
+                    for (Point p : listPoint) {
+                        Log.d("Points:  ", p.toString());
+                    }
+
                 }
             });
 

@@ -13,4 +13,9 @@
     <item android:id="@+id/terrain_map"
         android:title="@string/terrain_map"
         app:showAsAction="never"/>
+
+    <item android:id="@+id/send_drone"
+        android:title="@string/send_drone"
+        app:showAsAction="always"/>
+
 </menu>

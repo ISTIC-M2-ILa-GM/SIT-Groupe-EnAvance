@@ -2,6 +2,8 @@ package lapin.istic.com.lapin_android.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 
 import lapin.istic.com.lapin_android.model.*;
@@ -10,16 +12,21 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -28,28 +35,43 @@ import java.util.List;
 
 import lapin.istic.com.lapin_android.R;
 
+/**
+ * @author KADRI Noureddine
+ */
 public class LocationActivity extends AppCompatActivity
         implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;
     private LocationManager locationManager;
-    private String hauteur;
+    private double height = 0;
     private List<Point> listPoint;
+    private Button button1;
+    private EditText searchview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_location);
-        hauteur = getIntent().getStringExtra("hauteurIntent");
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
         listPoint = new ArrayList<>();
-    }
+        button1 = (Button) findViewById(R.id.button1);
+        searchview = (EditText) findViewById(R.id.searchView);
+        button1.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                String text = searchview.getText().toString();
+                if (!text.matches("")) {
+                    height = Double.parseDouble(text);
+                }
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,6 +96,19 @@ public class LocationActivity extends AppCompatActivity
                 return true;
             case R.id.terrain_map:
                 googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                return true;
+            case R.id.send_drone:
+                DronePath dronePath = new DronePath();
+                if (listPoint.isEmpty()) {
+                    Toast.makeText(getApplicationContext(),
+                            "Cannot Send Drone! \n No points selected!", Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    //ToDo Sent Drone Path to Service
+                    dronePath.setPoints(listPoint);
+
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -121,28 +156,27 @@ public class LocationActivity extends AppCompatActivity
                 public void onMapClick(LatLng point) {
                     //Do your stuff with LatLng here
                     //Then pass LatLng to other activity
-                    Toast.makeText(
-                            getBaseContext(), "Map clicked: \n [" + point.latitude + " / " + point.longitude + " / " + hauteur + "]", Toast.LENGTH_SHORT).show();
-                    createMarker(point.latitude, point.longitude, "Hauteur: " + hauteur, "new Marker");
-                    //TODO Add points to List
-                    listPoint.add(new Point(point.latitude, point.longitude, Double.parseDouble(hauteur)));
-                    Log.d("ListPoints", listPoint.toString());
+                    createMarker(point.latitude, point.longitude, "Hauteur: " + height, "[" + point.latitude + ", " + point.latitude + "]");
+                    listPoint.add(new Point(point.latitude, point.longitude, height));
+                    for (Point p : listPoint) {
+                        Log.d("Points:  ", p.toString());
+                    }
                 }
             });
-
-
         }
     }
 
     private void createMarker(double latitude, double longitude, String title, String snippet) {
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.test);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 84, 84, false);
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
                 .anchor(0.5f, 0.5f)
                 .title(title)
-                .snippet(snippet));
+                .snippet(snippet))
+                .setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
     }
-
-
 }
 
 

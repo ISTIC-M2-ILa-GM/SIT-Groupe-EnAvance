@@ -1,16 +1,34 @@
 package SIT.backend;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import SIT.backend.repository.MissionRepository;
-
-@RestController
-@RequestMapping("/api/mission")
-
+@SpringBootApplication
+@ComponentScan
 public class App {
-	// https://www.djamware.com/post/59be51e780aca768e4d2b140/tutorial-of-building-java-rest-api-using-spring-boot-and-mongodb
-	@Autowired
-	MissionRepository missionRepository;
+
+	public static void main(String[] args) {
+		SpringApplication.run(App.class, args);
+	}
+
+	@Configuration
+	public class CorsConfig {
+		@Bean
+		public WebMvcConfigurer corsConfigurer() {
+			return new WebMvcConfigurerAdapter() {
+				@Override
+				public void addCorsMappings(CorsRegistry registry) {
+					registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("*")
+							.allowedHeaders("*");
+				}
+			};
+		}
+	}
+
 }

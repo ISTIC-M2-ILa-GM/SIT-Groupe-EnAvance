@@ -11,6 +11,11 @@ public class Mission {
 	@Id
 	private Integer id;
 	private List<Point> points;
+	
+	
+
+	public Mission() {
+	}
 
 	public Mission(Integer id, List<Point> points) {
 		super();

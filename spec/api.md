@@ -13,3 +13,10 @@ Result:
         ]
     }
 ```
+
+* POST /api/picture/{picture_index}
+
+Result:
+```
+    <<PICTURE_BINARY_DATA>>
+```

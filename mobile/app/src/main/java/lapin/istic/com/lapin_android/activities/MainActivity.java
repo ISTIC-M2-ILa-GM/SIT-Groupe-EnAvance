@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import lapin.istic.com.lapin_android.R;
 
+/**
+ * @author KADRI Noureddine
+ */
 public class MainActivity extends AppCompatActivity {
     private Button startFlying;
     private EditText hauteur;

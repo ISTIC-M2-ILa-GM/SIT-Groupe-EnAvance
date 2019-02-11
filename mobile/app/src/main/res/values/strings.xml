@@ -9,4 +9,6 @@
     <string name="terrain_map">Terrain</string>
     <string name="dropped_pin">Dropped in</string>
     <string name="Open_google_map">Open Google Map</string>
+    <string name="input_height">Input Height...</string>
+
 </resources>

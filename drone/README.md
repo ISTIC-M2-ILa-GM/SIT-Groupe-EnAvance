@@ -12,7 +12,8 @@
 * MERZOUK Fahim
 
 ## Technologies
- // TODO
+* [Python 2.7](https://docs.python.org/2/)
+* [Dronekit](http://python.dronekit.io/)
 
 ## Mise en place Environnement Dev
 A chaque installation d'une nouvelle librairie, la personne qui a installé la lib doit:

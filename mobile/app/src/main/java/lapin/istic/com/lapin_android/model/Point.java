@@ -3,7 +3,7 @@ package lapin.istic.com.lapin_android.model;
 /**
  * @author DESCHAMPS Mathieu
  */
-class Point {
+public class Point {
 
      //latitude
      private double x;

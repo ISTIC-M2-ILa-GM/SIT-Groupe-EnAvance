@@ -3,24 +3,33 @@ package lapin.istic.com.lapin_android.activities;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+
 import lapin.istic.com.lapin_android.model.*;
+
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import lapin.istic.com.lapin_android.R;
 
 /**
@@ -31,21 +40,34 @@ public class LocationActivity extends AppCompatActivity
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;
     private LocationManager locationManager;
-    private String hauteur;
+    private double height = 0;
     private List<Point> listPoint;
+    private Button button1;
+    private EditText searchview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_location);
-        hauteur = getIntent().getStringExtra("hauteurIntent");
         // Get the SupportMapFragment and request notification
         // when the map is ready to be used.
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
         listPoint = new ArrayList<>();
+        button1 = (Button) findViewById(R.id.button1);
+        searchview = (EditText) findViewById(R.id.searchView);
+        button1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String text = searchview.getText().toString();
+                if (!text.matches("")) {
+                    height = Double.parseDouble(text);
+                }
+            }
+        });
     }
 
     @Override
@@ -79,6 +101,7 @@ public class LocationActivity extends AppCompatActivity
                             "Cannot Send Drone! \n No points selected!", Toast.LENGTH_SHORT)
                             .show();
                 } else {
+                    //ToDo Sent Drone Path to Service
                     dronePath.setPoints(listPoint);
 
                 }
@@ -130,17 +153,13 @@ public class LocationActivity extends AppCompatActivity
                 public void onMapClick(LatLng point) {
                     //Do your stuff with LatLng here
                     //Then pass LatLng to other activity
-                    createMarker(point.latitude, point.longitude, "Hauteur: " + hauteur, "[" + point.latitude + "," + point.latitude + "]");
-                    //TODO Add points to List
-                    listPoint.add(new Point(point.latitude, point.longitude, Double.parseDouble(hauteur)));
+                    createMarker(point.latitude, point.longitude, "Hauteur: " + height, "[" + point.latitude + ", " + point.latitude + "]");
+                    listPoint.add(new Point(point.latitude, point.longitude, height));
                     for (Point p : listPoint) {
                         Log.d("Points:  ", p.toString());
                     }
-
                 }
             });
-
-
         }
     }
 
@@ -151,8 +170,6 @@ public class LocationActivity extends AppCompatActivity
                 .title(title)
                 .snippet(snippet));
     }
-
-
 }
 
 

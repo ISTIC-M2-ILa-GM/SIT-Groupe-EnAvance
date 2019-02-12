@@ -19,6 +19,7 @@ Result:
 Result:
 ```
     {
-        picture: <<BASE 64>>
+        picture: <<BASE 64>>,
+        point: {x: double, y: double, z: double}
     }
 ```

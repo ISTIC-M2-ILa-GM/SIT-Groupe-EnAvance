@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class CustomSequences {
 	@Id
 	private String id;
-	private int seq;
+	private Integer seq;
 
 	public CustomSequences(String id, int seq) {
 		super();

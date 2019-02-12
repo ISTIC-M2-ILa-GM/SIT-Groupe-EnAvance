@@ -32,6 +32,13 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".activities.LocationActivity"></activity>
+
+        <service
+            android:name=".services.FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

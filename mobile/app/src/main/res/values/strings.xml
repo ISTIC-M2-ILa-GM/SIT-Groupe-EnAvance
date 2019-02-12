@@ -11,5 +11,6 @@
     <string name="Open_google_map">Open Google Map</string>
     <string name="input_height">  Input Height…</string>
     <string name="send_drone">Send Drone</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 
 </resources>

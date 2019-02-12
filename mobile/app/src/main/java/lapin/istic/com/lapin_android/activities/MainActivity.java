@@ -15,7 +15,7 @@ import lapin.istic.com.lapin_android.R;
  */
 public class MainActivity extends AppCompatActivity {
     private Button startFlying;
-
+    private Button resultMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +27,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                     Intent intent = new Intent(getBaseContext(), LocationActivity.class);
                     startActivityForResult(intent, 0);
+            }
+        });
+
+        resultMap = (Button) findViewById(R.id.show_result);
+
+        resultMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ResultMapActivity.class);
+                startActivity(intent);
             }
         });
     }

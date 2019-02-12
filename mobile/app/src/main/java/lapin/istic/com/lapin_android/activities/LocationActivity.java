@@ -167,15 +167,12 @@ public class LocationActivity extends AppCompatActivity
     }
 
     private void createMarker(double latitude, double longitude, String title, String snippet) {
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.test);
-        Bitmap b=bitmapdraw.getBitmap();
-        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 84, 84, false);
+
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
                 .anchor(0.5f, 0.5f)
                 .title(title)
-                .snippet(snippet))
-                .setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+                .snippet(snippet));
     }
 }
 

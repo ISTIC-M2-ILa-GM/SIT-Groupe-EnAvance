@@ -7,7 +7,7 @@ logging.basicConfig(format=FORMAT)
 
 
 '''
-Envoie une requete POST sur 
+Envoie une requete GET sur 
 '''
 
 

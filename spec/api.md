@@ -7,14 +7,14 @@ Result:
     {
         id: ...,
         points: [
-            {x1, y1, z1},
-            {x2, y2, z2},
-            {x3, y3, z3},
+            {index: int, x: double, y: double, z: double},
+            {index: int, x: double, y: double, z: double},
+            {index: int, x: double, y: double, z: double}
         ]
     }
 ```
 
-* POST /api/picture/{picture_index}
+* POST /api/mission/{mission_id}/picture/{point_index}
 
 Result:
 ```

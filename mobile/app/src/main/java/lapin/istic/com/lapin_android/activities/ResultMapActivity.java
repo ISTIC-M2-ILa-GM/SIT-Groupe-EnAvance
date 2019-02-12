@@ -5,14 +5,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
-
-import lapin.istic.com.lapin_android.model.*;
-
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,12 +30,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lapin.istic.com.lapin_android.R;
+import lapin.istic.com.lapin_android.model.DronePath;
+import lapin.istic.com.lapin_android.model.Point;
 
-/**
- * @author KADRI Noureddine
- */
-public class LocationActivity extends AppCompatActivity
-        implements OnMapReadyCallback {
+public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;
     private LocationManager locationManager;
@@ -47,14 +41,10 @@ public class LocationActivity extends AppCompatActivity
     private List<Point> listPoint;
     private Button button1;
     private EditText searchview;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Retrieve the content view that renders the map.
-        setContentView(R.layout.activity_location);
-        // Get the SupportMapFragment and request notification
-        // when the map is ready to be used.
+        setContentView(R.layout.activity_result_map);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
@@ -72,6 +62,7 @@ public class LocationActivity extends AppCompatActivity
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -167,13 +158,15 @@ public class LocationActivity extends AppCompatActivity
     }
 
     private void createMarker(double latitude, double longitude, String title, String snippet) {
-
+        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.test);
+        Bitmap b=bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 84, 84, false);
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
                 .anchor(0.5f, 0.5f)
                 .title(title)
-                .snippet(snippet));
+                .snippet(snippet))
+                .setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker));
     }
+
 }
-
-

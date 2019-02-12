@@ -1,11 +1,20 @@
 package SIT.backend;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.imageio.ImageIO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import SIT.backend.dto.PointDTO;
 import SIT.backend.dto.PointsListDTO;
+import SIT.backend.dto.ResultDTO;
 import SIT.backend.entity.CustomSequences;
 import SIT.backend.entity.Mission;
 import SIT.backend.repository.CustomSequencesRepository;
 import SIT.backend.repository.MissionRepository;
 import SIT.backend.service.NextSequenceService;
 import SIT.backend.entity.Point;
+import SIT.backend.entity.Result;
 
 @RestController
 @RequestMapping("/api/mission")
@@ -75,5 +86,40 @@ public class Controller {
 		} else {
 			return null;
 		}
+	}
+	
+	/**
+	 * Recevoir une photo par point
+	 * @throws IOException 
+	 */
+	@PostMapping("/{mission_id}/result/{point_index}")
+	@ResponseBody
+	public void sendPhoto(@PathVariable("mission_id") String missionId,
+						  @PathVariable("point_index") String pointIndex,
+						  @RequestBody ResultDTO resultDTO) throws IOException {
+		
+		String repPath="./pictures/";
+		
+		BufferedImage image = null;
+		byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(resultDTO.getImageB64());
+		// write the image to a file
+		String path=repPath+"imageM"+missionId+"P"+pointIndex+".png";
+		File outputFile = new File(path);
+		 try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(outputFile))) {
+	            outputStream.write(imageBytes);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		 Optional<Mission> missionOpt = missionRepository.findById(Integer.parseInt(missionId));
+		 if(missionOpt.isPresent()) {
+			 Mission mission = missionOpt.get();
+			 List<Point> points = mission.getPoints();
+			 Integer ptIndex = Integer.parseInt(pointIndex);
+			 if(ptIndex<points.size()) {
+				 Result result =  new Result(path);
+				 points.get(ptIndex).setResult(result);
+				 missionRepository.save(mission);
+			 }
+		 }		 
 	}
 }

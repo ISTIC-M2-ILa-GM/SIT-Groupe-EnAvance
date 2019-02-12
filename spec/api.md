@@ -14,9 +14,11 @@ Result:
     }
 ```
 
-* POST /api/mission/{mission_id}/picture/{point_index}
+* POST /api/mission/{mission_id}/result/{point_index}
 
 Result:
 ```
-    <<PICTURE_BINARY_DATA>>
+    {
+        picture: <<BASE 64>>
+    }
 ```

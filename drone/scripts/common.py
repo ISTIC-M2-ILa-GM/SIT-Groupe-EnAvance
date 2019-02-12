@@ -7,7 +7,9 @@ logging.basicConfig(format=FORMAT)
 
 
 '''
-Envoie une requete GET sur 
+Envoie une requete GET
+:param url: url sur laquelle on envoie la requete 
+:return: le retour sous format json (qu'il faut parser)
 '''
 
 
@@ -22,7 +24,10 @@ def get_request(url):
 
 
 '''
-Envoie une requete POST sur 
+Envoie une requete POST 
+:param url: url sur laquelle on envoie la requete 
+:param body: body de la requete post
+:return: le retour sous format json (potentiellement vide)
 '''
 
 
@@ -34,11 +39,4 @@ def post_request(url, body):
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
-
-if __name__ == '__main__':
-    res = get_request("http://httpbin.org/get")
-    print(res["url"])
-    data = [{"hello": "world"}, {"hello2": "world2"}]
-    res = post_request("http://httpbin.org/post", data)
-    print(res)
 

@@ -37,10 +37,9 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;
     private LocationManager locationManager;
-    private double height = 0;
-    private List<Point> listPoint;
-    private Button button1;
-    private EditText searchview;
+    private List<Point> listPoint = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,18 +48,7 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
         listPoint = new ArrayList<>();
-        button1 = (Button) findViewById(R.id.button1);
-        searchview = (EditText) findViewById(R.id.searchView);
-        button1.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                String text = searchview.getText().toString();
-                if (!text.matches("")) {
-                    height = Double.parseDouble(text);
-                }
-            }
-        });
     }
 
 
@@ -72,39 +60,39 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Change the map type based on the user's selection.
-        switch (item.getItemId()) {
-            case R.id.normal_map:
-                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                return true;
-            case R.id.hybrid_map:
-                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                return true;
-            case R.id.satellite_map:
-                googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                return true;
-            case R.id.terrain_map:
-                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-                return true;
-            case R.id.send_drone:
-                DronePath dronePath = new DronePath();
-                if (listPoint.isEmpty()) {
-                    Toast.makeText(getApplicationContext(),
-                            "Cannot Send Drone! \n No points selected!", Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    //ToDo Sent Drone Path to Service
-                    dronePath.setPoints(listPoint);
-
-                }
-
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Change the map type based on the user's selection.
+//        switch (item.getItemId()) {
+//            case R.id.normal_map:
+//                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+//                return true;
+//            case R.id.hybrid_map:
+//                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+//                return true;
+//            case R.id.satellite_map:
+//                googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+//                return true;
+//            case R.id.terrain_map:
+//                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+//                return true;
+//            case R.id.send_drone:
+//                DronePath dronePath = new DronePath();
+//                if (listPoint.isEmpty()) {
+//                    Toast.makeText(getApplicationContext(),
+//                            "Cannot Send Drone! \n No points selected!", Toast.LENGTH_SHORT)
+//                            .show();
+//                } else {
+//                    //ToDo Sent Drone Path to Service
+//                    dronePath.setPoints(listPoint);
+//
+//                }
+//
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     @Override
     public void onMapReady(GoogleMap googleM) {
@@ -141,25 +129,29 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
             googleMap.setIndoorEnabled(true);
             googleMap.setBuildingsEnabled(true);
             googleMap.getUiSettings().setZoomControlsEnabled(true);
+            ArrayList<Point> points = new ArrayList<>();
 
-            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(LatLng point) {
-                    //Do your stuff with LatLng here
-                    //Then pass LatLng to other activity
-                    createMarker(point.latitude, point.longitude, "Hauteur: " + height, "[" + point.latitude + ", " + point.latitude + "]");
-                    listPoint.add(new Point(point.latitude, point.longitude, height));
-                    for (Point p : listPoint) {
-                        Log.d("Points:  ", p.toString());
-                    }
-                }
-            });
+//            createMarker(point.latitude, point.longitude, "Hauteur: " + height, "[" + point.latitude + ", " + point.latitude + "]");
+
+
+//            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//                @Override
+//                public void onMapClick(LatLng point) {
+//                    //Do your stuff with LatLng here
+//                    //Then pass LatLng to other activity
+//                    createMarker(point.latitude, point.longitude, "Hauteur: " + height, "[" + point.latitude + ", " + point.latitude + "]");
+//                    listPoint.add(new Point(point.latitude, point.longitude, height));
+//                    for (Point p : listPoint) {
+//                        Log.d("Points:  ", p.toString());
+//                    }
+//                }
+//            });
         }
     }
 
     private void createMarker(double latitude, double longitude, String title, String snippet) {
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.test);
-        Bitmap b=bitmapdraw.getBitmap();
+        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.test);
+        Bitmap b = bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 84, 84, false);
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))

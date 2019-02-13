@@ -11,7 +11,7 @@ def location_callback(self, attr_name, msg):
 
 droneService = DroneService()
 
-droneService.register_checkpoint_callback(location_callback)
+droneService.register_position_callback(location_callback)
 
 droneService.add_point(37.0, 1.337, 23)
 

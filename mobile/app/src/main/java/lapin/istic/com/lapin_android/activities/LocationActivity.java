@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 
+import lapin.istic.com.lapin_android.db.DBHandler;
 import lapin.istic.com.lapin_android.model.*;
 
 import android.location.LocationManager;
@@ -34,6 +35,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lapin.istic.com.lapin_android.R;
+import lapin.istic.com.lapin_android.services.DroneService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * @author KADRI Noureddine
@@ -47,6 +54,8 @@ public class    LocationActivity extends AppCompatActivity
     private List<Point> listPoint;
     private Button button1;
     private EditText searchview;
+    private  DroneService droneService;
+    private DBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +80,15 @@ public class    LocationActivity extends AppCompatActivity
                 }
             }
         });
+
+        //Service
+         droneService = new Retrofit.Builder()
+                .baseUrl(DroneService.END_POINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(DroneService.class);
+
+         dbHandler = new DBHandler(this);
     }
 
     @Override
@@ -106,6 +124,9 @@ public class    LocationActivity extends AppCompatActivity
                 } else {
                     //ToDo Sent Drone Path to Service
                     dronePath.setPoints(listPoint);
+                    for(Point point: listPoint){
+                        dbHandler.addPoint(point);
+                    }
                 }
 
                 return true;
@@ -124,7 +145,10 @@ public class    LocationActivity extends AppCompatActivity
         } else {
             googleMap = googleM;
             // and move the map's camera to the same location.
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(
                         getBaseContext(), "ACCESS LOCATION DENIED", Toast.LENGTH_SHORT).show();
                 return;
@@ -176,6 +200,8 @@ public class    LocationActivity extends AppCompatActivity
                 .title(title)
                 .snippet(snippet));
     }
+
+    
 }
 
 

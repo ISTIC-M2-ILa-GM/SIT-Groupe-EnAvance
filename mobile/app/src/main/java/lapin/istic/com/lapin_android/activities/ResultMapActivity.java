@@ -1,6 +1,7 @@
 package lapin.istic.com.lapin_android.activities;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lapin.istic.com.lapin_android.R;
+import lapin.istic.com.lapin_android.db.DBHandler;
 import lapin.istic.com.lapin_android.model.DronePath;
 import lapin.istic.com.lapin_android.model.Point;
 
@@ -37,8 +39,8 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;
     private LocationManager locationManager;
-    private List<Point> listPoint = new ArrayList<>();
-
+    private List<Point> listPoint;
+    private DBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
         listPoint = new ArrayList<>();
+        dbHandler = new DBHandler(this);
+        listPoint = dbHandler.getPoints();
 
     }
 
@@ -59,40 +63,6 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
         return true;
     }
 
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Change the map type based on the user's selection.
-//        switch (item.getItemId()) {
-//            case R.id.normal_map:
-//                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-//                return true;
-//            case R.id.hybrid_map:
-//                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-//                return true;
-//            case R.id.satellite_map:
-//                googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-//                return true;
-//            case R.id.terrain_map:
-//                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-//                return true;
-//            case R.id.send_drone:
-//                DronePath dronePath = new DronePath();
-//                if (listPoint.isEmpty()) {
-//                    Toast.makeText(getApplicationContext(),
-//                            "Cannot Send Drone! \n No points selected!", Toast.LENGTH_SHORT)
-//                            .show();
-//                } else {
-//                    //ToDo Sent Drone Path to Service
-//                    dronePath.setPoints(listPoint);
-//
-//                }
-//
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
 
     @Override
     public void onMapReady(GoogleMap googleM) {
@@ -129,23 +99,9 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
             googleMap.setIndoorEnabled(true);
             googleMap.setBuildingsEnabled(true);
             googleMap.getUiSettings().setZoomControlsEnabled(true);
-            ArrayList<Point> points = new ArrayList<>();
-
-//            createMarker(point.latitude, point.longitude, "Hauteur: " + height, "[" + point.latitude + ", " + point.latitude + "]");
-
-
-//            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-//                @Override
-//                public void onMapClick(LatLng point) {
-//                    //Do your stuff with LatLng here
-//                    //Then pass LatLng to other activity
-//                    createMarker(point.latitude, point.longitude, "Hauteur: " + height, "[" + point.latitude + ", " + point.latitude + "]");
-//                    listPoint.add(new Point(point.latitude, point.longitude, height));
-//                    for (Point p : listPoint) {
-//                        Log.d("Points:  ", p.toString());
-//                    }
-//                }
-//            });
+            for (Point point : listPoint) {
+                createMarker(point.getX(), point.getY(), "Hauteur: " + point.getZ(), "[" + point.getX() + ", " + point.getY() + "]");
+            }
         }
     }
 

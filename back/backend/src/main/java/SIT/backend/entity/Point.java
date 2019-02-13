@@ -18,6 +18,10 @@ public class Point {
 		this.index = index;
 	}
 
+	public Point() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public double getX() {
 		return x;
 	}

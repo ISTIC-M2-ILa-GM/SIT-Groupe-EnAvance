@@ -10,17 +10,17 @@ public class MissionResult {
 
 	@Id
 	private Integer id;
-	private List<Point> points;
+	private Point point;
 
 	public MissionResult() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public MissionResult(Integer id, List<Point> points) {
+	public MissionResult(Integer id, Point point) {
 		super();
 		this.id = id;
-		this.points = points;
+		this.point = point;
 	}
 
 	public Integer getId() {
@@ -31,12 +31,12 @@ public class MissionResult {
 		this.id = id;
 	}
 
-	public List<Point> getPoints() {
-		return points;
+	public Point getPoint() {
+		return point;
 	}
 
-	public void setPoints(List<Point> points) {
-		this.points = points;
+	public void setPoint(Point point) {
+		this.point = point;
 	}
 
 }

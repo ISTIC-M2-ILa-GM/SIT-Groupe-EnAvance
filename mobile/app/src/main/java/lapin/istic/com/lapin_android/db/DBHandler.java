@@ -1,8 +1,11 @@
 package lapin.istic.com.lapin_android.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import lapin.istic.com.lapin_android.model.Point;
 
 /**
  * @author Noureddine KADRI
@@ -44,4 +47,17 @@ public class DBHandler extends SQLiteOpenHelper {
         // Creating tables again
         onCreate(db);
     }
+
+    public void addPoint(Point point) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(POINT_INDEX, point.getIndex());
+        values.put(POINT_X, point.getX());
+        values.put(POINT_Y, (point.getY()));
+        values.put(POINT_Z, (point.getZ()));
+        // Inserting Row
+        db.insert(TABLE_POINT, null, values);
+        db.close(); // Closing database connection
+    }
+
 }

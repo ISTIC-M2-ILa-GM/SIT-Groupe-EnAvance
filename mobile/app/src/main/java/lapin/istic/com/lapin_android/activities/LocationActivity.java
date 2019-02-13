@@ -106,7 +106,6 @@ public class LocationActivity extends AppCompatActivity
                 } else {
                     //ToDo Sent Drone Path to Service
                     dronePath.setPoints(listPoint);
-
                 }
 
                 return true;
@@ -158,8 +157,11 @@ public class LocationActivity extends AppCompatActivity
                     //Then pass LatLng to other activity
                     createMarker(point.latitude, point.longitude, "Hauteur: " + height, "[" + point.latitude + ", " + point.latitude + "]");
                     listPoint.add(new Point(point.latitude, point.longitude, height));
+                    int index = 0;
                     for (Point p : listPoint) {
+                        p.setIndex(index);
                         Log.d("Points:  ", p.toString());
+                        index++;
                     }
                 }
             });

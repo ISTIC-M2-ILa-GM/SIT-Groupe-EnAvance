@@ -45,7 +45,8 @@ public class TestingActivityNK extends AppCompatActivity implements View.OnClick
                         if (response.isSuccessful() && responseDrone != null) {
                             Toast.makeText(TestingActivityNK.this,
                                     String.format("Mission %s with job %s was created at %s with id %s",
-                                            responseDrone.getId()),
+                                            responseDrone.getId(),
+                                            responseDrone.getPoints().toString()),
                                     Toast.LENGTH_LONG)
                                     .show();
                         } else {

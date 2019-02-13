@@ -24,8 +24,8 @@ public interface DroneService {
     @GET("/api/mision/result/{id}")
     Call<List<Integer>> getResultsId(@Path("id") Integer id);
 
-    @GET("/api/image/{id}")
-    Call<ResponseBody> getImage(@Path("id") Integer id);
+    @GET("/api/mission/{id}/result/{index}")
+    Call<ResponseBody> getImage(@Path("id") Integer id, @Path("index") Integer index);
 
 
 }

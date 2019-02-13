@@ -19,16 +19,13 @@ public class    FirebaseMessagingService extends com.google.firebase.messaging.F
         String channelId = getString(R.string.default_notification_channel_id);
 
 
-
-        if( remoteMessage.getData().size() > 0)
+        if( remoteMessage.getNotification() != null )
         {
-            Log.d("MainActivity","Notif receive");
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId);
             notificationBuilder.setAutoCancel(true)
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setWhen(System.currentTimeMillis())
-                    .setTicker("Hearty365")
-                    .setSmallIcon(R.drawable.rabbit2 )
+                    .setSmallIcon(R.drawable.rabbit2)
                     .setContentTitle(remoteMessage.getNotification().getTitle())
                     .setContentText(remoteMessage.getNotification().getBody());
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

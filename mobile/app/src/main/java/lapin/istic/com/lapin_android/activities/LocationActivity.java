@@ -38,7 +38,7 @@ import lapin.istic.com.lapin_android.R;
 /**
  * @author KADRI Noureddine
  */
-public class LocationActivity extends AppCompatActivity
+public class    LocationActivity extends AppCompatActivity
         implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;

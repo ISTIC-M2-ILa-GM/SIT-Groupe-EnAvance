@@ -1,21 +1,19 @@
 package SIT.backend.dto;
 
-public class PointAndroidDTO {
+public class PointDeBase {
 
 	double x, y, z;
-	Integer index;
 
-	public PointAndroidDTO() {
+	public PointDeBase() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public PointAndroidDTO(double x, double y, double z, Integer index) {
+	public PointDeBase(double x, double y, double z) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.index = index;
 	}
 
 	public double getX() {
@@ -40,14 +38,6 @@ public class PointAndroidDTO {
 
 	public void setZ(double z) {
 		this.z = z;
-	}
-
-	public Integer getIndex() {
-		return index;
-	}
-
-	public void setIndex(Integer index) {
-		this.index = index;
 	}
 
 }

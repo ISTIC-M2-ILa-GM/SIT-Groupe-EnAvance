@@ -2,14 +2,14 @@ package SIT.backend.entity;
 
 public class Point {
 
-	private long x, y, z;
+	private double x, y, z;
 	// contient le path vers l'image
 	private Result result;
 	// index pour pour faire la liaison image+point
 	// on va recevoir l'index dans la requete (param) avec l'image dans le body
 	private Integer index;
 
-	public Point(long x, long y, long z, Result result, Integer index) {
+	public Point(double x, double y, double z, Result result, Integer index) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -18,27 +18,27 @@ public class Point {
 		this.index = index;
 	}
 
-	public long getX() {
+	public double getX() {
 		return x;
 	}
 
-	public void setX(long x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 
-	public long getY() {
+	public double getY() {
 		return y;
 	}
 
-	public void setY(long y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 
-	public long getZ() {
+	public double getZ() {
 		return z;
 	}
 
-	public void setZ(long z) {
+	public void setZ(double z) {
 		this.z = z;
 	}
 

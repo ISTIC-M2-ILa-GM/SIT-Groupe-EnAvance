@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import SIT.backend.dto.PointAndroidDTO;
-import SIT.backend.dto.PointDroneDTO;
+import SIT.backend.dto.PointDeBase;
 import SIT.backend.dto.PointsListDTO;
 import SIT.backend.dto.ResultDTO;
 import SIT.backend.entity.CustomSequences;
@@ -128,11 +128,17 @@ public class Controller {
 			missionResult.setPoints(points);
 
 			Integer ptIndex = Integer.parseInt(pointIndex);
-			if (ptIndex < points.size()) {
-				Result result = new Result(path);
-				points.get(ptIndex).setResult(result);
-				missionResultRepository.save(missionResult);
+			for(Point pt : points) {
+				if(pt.getIndex() == ptIndex) {
+					pt.setX(resultDTO.getPointDroneDTO().getX());
+					pt.setY(resultDTO.getPointDroneDTO().getY());
+					pt.setZ(resultDTO.getPointDroneDTO().getZ());
+					Result result = new Result(path);
+					pt.setResult(result);
+					missionResultRepository.save(missionResult);
+				}
 			}
+			
 		}
 	}
 
@@ -159,7 +165,7 @@ public class Controller {
 			byte[] fileContent = FileUtils.readFileToByteArray(new File(imageFilePath));
 			String encodedImage = Base64.getEncoder().encodeToString(fileContent);
 			//put everything together
-			PointDroneDTO ptd = new PointDroneDTO(pt.getX(), pt.getY(), pt.getZ());
+			PointDeBase ptd = new PointDeBase(pt.getX(), pt.getY(), pt.getZ());
 			ResultDTO result = new ResultDTO(encodedImage, ptd);
 			return result;
 		}

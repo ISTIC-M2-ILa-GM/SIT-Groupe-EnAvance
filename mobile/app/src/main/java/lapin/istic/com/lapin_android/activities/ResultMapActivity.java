@@ -1,6 +1,7 @@
 package lapin.istic.com.lapin_android.activities;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lapin.istic.com.lapin_android.R;
+import lapin.istic.com.lapin_android.db.DBHandler;
 import lapin.istic.com.lapin_android.model.DronePath;
 import lapin.istic.com.lapin_android.model.Point;
 
@@ -37,8 +39,8 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;
     private LocationManager locationManager;
-    private List<Point> listPoint = new ArrayList<>();
-
+    private List<Point> listPoint;
+    private DBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
         listPoint = new ArrayList<>();
+        dbHandler = new DBHandler(this);
+        listPoint = dbHandler.getPoints();
 
     }
 

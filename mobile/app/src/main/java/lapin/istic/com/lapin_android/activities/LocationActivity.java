@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 
+import lapin.istic.com.lapin_android.db.DBHandler;
 import lapin.istic.com.lapin_android.model.*;
 
 import android.location.LocationManager;
@@ -54,6 +55,7 @@ public class LocationActivity extends AppCompatActivity
     private Button button1;
     private EditText searchview;
     private  DroneService droneService;
+    private DBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,8 @@ public class LocationActivity extends AppCompatActivity
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(DroneService.class);
+
+         dbHandler = new DBHandler(this);
     }
 
     @Override
@@ -120,7 +124,9 @@ public class LocationActivity extends AppCompatActivity
                 } else {
                     //ToDo Sent Drone Path to Service
                     dronePath.setPoints(listPoint);
-
+                    for(Point point: listPoint){
+                        dbHandler.addPoint(point);
+                    }
                 }
 
                 return true;

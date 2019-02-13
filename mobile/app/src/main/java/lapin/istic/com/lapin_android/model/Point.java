@@ -1,5 +1,7 @@
 package lapin.istic.com.lapin_android.model;
 
+import java.io.Serializable;
+
 /**
  * @author DESCHAMPS Mathieu
  */
@@ -13,6 +15,10 @@ public class Point {
     private double z;
 
     private int index;
+
+    public Point(){
+
+    }
 
     public Point(double x, double y, double z) {
         this.x = x;

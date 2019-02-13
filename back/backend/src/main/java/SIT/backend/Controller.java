@@ -7,11 +7,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import SIT.backend.dto.PointAndroidDTO;
+import SIT.backend.dto.PointDroneDTO;
 import SIT.backend.dto.PointsListDTO;
 import SIT.backend.dto.ResultDTO;
 import SIT.backend.entity.CustomSequences;
@@ -121,9 +124,9 @@ public class Controller {
 			// photos
 			missionResult.setId(mission.getId());
 			List<Point> points = new ArrayList<>(mission.getPoints());
-			
+
 			missionResult.setPoints(points);
-			
+
 			Integer ptIndex = Integer.parseInt(pointIndex);
 			if (ptIndex < points.size()) {
 				Result result = new Result(path);
@@ -131,5 +134,36 @@ public class Controller {
 				missionResultRepository.save(missionResult);
 			}
 		}
+	}
+
+	/**
+	 * GetPhoto by mission id and photo index
+	 * 
+	 * @throws IOException
+	 */
+	@GetMapping("/{mission_id}/result/{point_index}")
+	public ResultDTO getPhoto(@PathVariable("mission_id") String missionId, @PathVariable("point_index") String pointIndex)
+			throws IOException {
+		// get the mission by its id
+		Optional<MissionResult> missionResultOpt = missionResultRepository.findById(Integer.parseInt(missionId));
+		if (missionResultOpt.isPresent()) {
+			MissionResult missionResult = missionResultOpt.get();
+			// get the point of the mission which contains the picture's file path in the
+			// object Result
+			Point pt = missionResult.getPoints().get(Integer.parseInt(pointIndex));
+			// get the object Result
+			Result resultInTheDB = pt.getResult();
+			// get the file path from the object result
+			String imageFilePath = resultInTheDB.getPathToImage();
+			//Encode the image file into base64
+			byte[] fileContent = FileUtils.readFileToByteArray(new File(imageFilePath));
+			String encodedImage = Base64.getEncoder().encodeToString(fileContent);
+			//put everything together
+			PointDroneDTO ptd = new PointDroneDTO(pt.getX(), pt.getY(), pt.getZ());
+			ResultDTO result = new ResultDTO(encodedImage, ptd);
+			return result;
+		}
+		return null;
+
 	}
 }

@@ -16,7 +16,7 @@ import retrofit2.http.Path;
  */
 public interface DroneService {
 
-    public static final String END_POINT = "waiting...";
+    public static final String END_POINT = "http://localhost:8080";
 
     @POST("/api/mission")
     Call<Integer> createMission(@Body DronePath mission);

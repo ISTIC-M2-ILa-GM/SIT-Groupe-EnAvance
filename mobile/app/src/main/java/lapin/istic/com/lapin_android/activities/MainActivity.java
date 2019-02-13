@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import lapin.istic.com.lapin_android.R;
 
@@ -22,8 +23,13 @@ import lapin.istic.com.lapin_android.R;
  * @author KADRI Noureddine
  */
 public class MainActivity extends AppCompatActivity {
+
+    public static final String TOPIC ="drone";
     private Button startFlying;
     private Button resultMap;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +47,20 @@ public class MainActivity extends AppCompatActivity {
                                   Log.d("MainActivity","token: "+token);
                               }
                           });
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+                         .addOnCompleteListener(new OnCompleteListener<Void>() {
+                             @Override
+                             public void onComplete(@NonNull Task<Void> task) {
+                                 String msg = "Suscription done!";
+                                 if( !task.isSuccessful( ) )
+                                 {
+                                     msg = "Error during suscription";
+
+                                 }
+                                 Log.w("Main Activity", msg);
+                                 Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                             }
+                         });
         startFlying = (Button) findViewById(R.id.start_flying);
 
         startFlying.setOnClickListener(new View.OnClickListener() {
@@ -61,4 +81,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
+
+

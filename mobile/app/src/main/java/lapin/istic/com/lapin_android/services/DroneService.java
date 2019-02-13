@@ -1,7 +1,6 @@
 package lapin.istic.com.lapin_android.services;
 
 import java.util.List;
-
 import lapin.istic.com.lapin_android.model.DronePath;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -12,7 +11,6 @@ import retrofit2.http.Path;
 
 /**
  * @author DESCHAMPS Mathieu
- *
  */
 public interface DroneService {
 
@@ -27,5 +25,6 @@ public interface DroneService {
     @GET("/api/image/{id}")
     Call<ResponseBody> getImage(@Path("id") Integer id);
 
-
+    @POST("/sendMission")
+    Call<DronePath> sendMission(@Body DronePath dronePath);
 }

@@ -32,6 +32,11 @@ class DroneService:
         cmd = Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT,
                       0, 0, 0, 0, 0, 0,
                       latitude, longitude, altitude)
+
+        # on annule les missions précédentes
+        if cancel_previous_missions:
+            cmds.clear()
+
         cmds.add(cmd)
         cmds.upload()
 

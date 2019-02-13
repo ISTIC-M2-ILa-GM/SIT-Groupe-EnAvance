@@ -5,18 +5,21 @@ package lapin.istic.com.lapin_android.model;
  */
 public class Point {
 
-     //latitude
-     private double x;
-     //longitude
-     private double y;
-     //altitude (in meter)
-     private double z;
+    //latitude
+    private double x;
+    //longitude
+    private double y;
+    //altitude (in meter)
+    private double z;
 
-     public  Point( double x, double y, double z){
-         this.x = x;
-         this.y = y;
-         this.z =z;
-     }
+    private int index;
+
+    public Point(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.index = -1;
+    }
 
     public double getX() {
         return x;
@@ -42,12 +45,22 @@ public class Point {
         this.z = z;
     }
 
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     @Override
     public String toString() {
-        return "Point{" +
-                "x=" + x +
-                ", y=" + y +
-                ", z=" + z +
+        return "Point {" +
+                "x = " + x +
+                ", y = " + y +
+                ", z = " + z +
+                ", index = " + index +
                 '}';
     }
 }

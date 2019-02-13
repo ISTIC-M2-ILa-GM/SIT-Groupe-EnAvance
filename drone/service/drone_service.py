@@ -46,7 +46,7 @@ class DroneService:
         Démarre le drone et le fait executer les missions préalablement chargé
         :return:
         """
-        self.__arm_and_takeoff(20)
+        self.__arm_and_takeoff(5)
         self.vehicle.commands.next = 0
 
         # Set mode to AUTO to start mission
@@ -66,7 +66,15 @@ class DroneService:
             # if nextwaypoint == 5:  # Dummy waypoint - as soon as we reach waypoint 4 this is true and we exit.
             #     print("Exit 'standard' mission when start heading to final waypoint (5)")
             #     break;
-            time.sleep(1)
+            time.sleep(100)
+
+    def register_position_callback(self, callback):
+        """
+        Enregistre un callback qui est appelé à chaque changement de position du drone
+        :param callback: function de type -> toto(self, attr_name, msg)
+        :return: nada
+        """
+        self.vehicle.add_attribute_listener('location.global_frame', callback)
 
     def return_to_base(self):
         """

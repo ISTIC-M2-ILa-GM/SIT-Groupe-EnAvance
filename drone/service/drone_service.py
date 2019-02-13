@@ -1,8 +1,9 @@
 # coding=utf-8
-import dronekit_sitl
+import time
 
+import dronekit_sitl
 # Import DroneKit-Python
-from dronekit import connect, LocationGlobal, Command
+from dronekit import connect, Command, VehicleMode
 from pymavlink import mavutil
 
 sitl = dronekit_sitl.start_default()
@@ -19,9 +20,9 @@ class DroneService:
         self.vehicle = connect(connection_string, wait_ready=True)
         pass
 
-    def add_mission(self, latitude, longitude, altitude, cancel_previous_missions=False):
+    def add_point(self, latitude, longitude, altitude, cancel_previous_missions=False):
         """
-        Ajoute une mission à
+        Ajoute un autre point à atteindre
         :param altitude:
         :param latitude:
         :param longitude:
@@ -57,3 +58,35 @@ class DroneService:
 
         :return:
         """
+
+    def __arm_and_takeoff(self, aTargetAltitude):
+        """
+        Arms vehicle and fly to aTargetAltitude.
+        """
+
+        print("Basic pre-arm checks")
+        # Don't let the user try to arm until autopilot is ready
+        while not self.vehicle.is_armable:
+            print(" Waiting for vehicle to initialise...")
+            time.sleep(1)
+
+        print("Arming motors")
+        # Copter should arm in GUIDED mode
+        self.vehicle.mode = VehicleMode("GUIDED")
+        self.vehicle.armed = True
+
+        while not self.vehicle.armed:
+            print(" Waiting for arming...")
+            time.sleep(1)
+
+        print("Taking off!")
+        self.vehicle.simple_takeoff(aTargetAltitude)  # Take off to target altitude
+
+        # Wait until the vehicle reaches a safe height before processing the goto (otherwise the command
+        #  after Vehicle.simple_takeoff will execute immediately).
+        while True:
+            print(" Altitude: ", self.vehicle.location.global_relative_frame.alt)
+            if self.vehicle.location.global_relative_frame.alt >= aTargetAltitude * 0.95:
+                print("Reached target altitude")
+                break
+            time.sleep(1)

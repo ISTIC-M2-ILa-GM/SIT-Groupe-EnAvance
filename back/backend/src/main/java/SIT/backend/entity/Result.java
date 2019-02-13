@@ -4,17 +4,17 @@ public class Result {
 
 	private String pathToImage;
 
-	public Result(String pathToImaage) {
+	public Result(String pathToImage) {
 		super();
-		this.pathToImage = pathToImaage;
+		this.pathToImage = pathToImage;
 	}
 
-	public String getPathToImaage() {
+	public String getPathToImage() {
 		return pathToImage;
 	}
 
-	public void setPathToImaage(String pathToImaage) {
-		this.pathToImage = pathToImaage;
+	public void setPathToImage(String pathToImage) {
+		this.pathToImage = pathToImage;
 	}
 
 }

@@ -3,23 +3,33 @@ package SIT.backend.dto;
 public class ResultDTO {
 
 	private String picture;
+	private PointDroneDTO pointDroneDTO;
 
 	public ResultDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResultDTO(String imageB64) {
+	public ResultDTO(String picture, PointDroneDTO pointDroneDTO) {
 		super();
-		this.picture = imageB64;
+		this.picture = picture;
+		this.pointDroneDTO = pointDroneDTO;
 	}
 
-	public String getImageB64() {
+	public String getPicture() {
 		return picture;
 	}
 
-	public void setImageB64(String imageB64) {
-		this.picture = imageB64;
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public PointDroneDTO getPointDroneDTO() {
+		return pointDroneDTO;
+	}
+
+	public void setPointDroneDTO(PointDroneDTO pointDroneDTO) {
+		this.pointDroneDTO = pointDroneDTO;
 	}
 
 }

@@ -1,21 +1,20 @@
 package SIT.backend.dto;
 
-public class PointDTO {
+public class PointDroneDTO {
 
 	long x, y, z;
 
-	
-	public PointDTO() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	public PointDroneDTO() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
 
-	public PointDTO(long x, long y, long z) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
+	public PointDroneDTO(long x, long y, long z) {
+			super();
+			this.x = x;
+			this.y = y;
+			this.z = z;
+		}
 
 	public long getX() {
 		return x;

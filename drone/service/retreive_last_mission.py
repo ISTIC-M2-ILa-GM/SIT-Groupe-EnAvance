@@ -18,6 +18,8 @@ GET /api/mission/last
     }
 
 '''
+
+
 def get_last_mission():
     hostServer = config.hostServer
     url = hostServer + "/api/mission/last"

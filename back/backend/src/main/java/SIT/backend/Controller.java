@@ -11,9 +11,8 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
-import javax.imageio.ImageIO;
-
 import org.apache.commons.io.FileUtils;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +32,7 @@ import SIT.backend.entity.MissionResult;
 import SIT.backend.repository.CustomSequencesRepository;
 import SIT.backend.repository.MissionRepository;
 import SIT.backend.repository.MissionResultRepository;
+import SIT.backend.service.GenerationIdService;
 import SIT.backend.service.NextSequenceService;
 import SIT.backend.entity.Point;
 import SIT.backend.entity.Result;
@@ -50,6 +50,8 @@ public class Controller {
 	NextSequenceService nextSequenceService;
 	@Autowired
 	MissionResultRepository missionResultRepository;
+	@Autowired
+	GenerationIdService generationIdService;
 
 	/**
 	 * Renvoyer la liste des points d'une mission
@@ -132,6 +134,13 @@ public class Controller {
 				Result result = new Result(path);
 				points.get(ptIndex).setResult(result);
 				missionResultRepository.save(missionResult);
+				try {
+					// Obtenir les id pour la notification du client mobile
+					generationIdService.generer(missionResult);
+				} catch (JSONException e) {
+					
+					e.printStackTrace();
+				}
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 package SIT.backend.service;
 
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -8,6 +9,7 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
+@Service
 public class androidPushNotificationsService {
 
 	private static final String FIREBASE_SERVER_KEY = "AAAAT6Ud1G4:APA91bFAK-WdBAIO4ThV_vqb61IqvNM7Kc8cSEszxe2ID1wayuAnk5oYlVE4EWo_D8w859pT0BVXUkiFL-OhbI04f46Fvd4vNDb8irr0gwfHPIojKTGDTA3sj_4Q_SsvA686IR4nEhHy";

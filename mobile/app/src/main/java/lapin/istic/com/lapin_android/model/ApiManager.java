@@ -28,8 +28,8 @@ public class ApiManager {
         return apiManager;
     }
 
-    public void createUser(DronePath user, Callback<DronePath> callback) {
-        Call<DronePath> userCall = service.sendMission(user);
+    public void createUser(DronePath user, Callback<String> callback) {
+        Call<String> userCall = service.sendMission(user);
         userCall.enqueue(callback);
     }
 }

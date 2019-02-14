@@ -15,6 +15,7 @@ import java.util.UUID;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ import SIT.backend.entity.CustomSequences;
 import SIT.backend.entity.Mission;
 import SIT.backend.repository.CustomSequencesRepository;
 import SIT.backend.repository.MissionRepository;
+import SIT.backend.service.GenerationIdService;
 import SIT.backend.service.NextSequenceService;
 import SIT.backend.entity.PointMission;
 import SIT.backend.entity.PointResult;
@@ -48,6 +50,9 @@ public class Controller {
 	CustomSequencesRepository customSequencesRepository;
 	@Autowired
 	NextSequenceService nextSequenceService;
+	
+	@Autowired
+	GenerationIdService generationIdService;
 
 	/**
 	 * Renvoyer la liste des points d'une mission
@@ -132,6 +137,13 @@ public class Controller {
 			results.add(result);
 			mission.setResults(results);
 			missionRepository.save(mission);
+			try {
+				// Obtenir les id pour la notification du client mobile
+				generationIdService.generer(result.getId(), mission_id);
+			} catch (JSONException e) {
+		
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -159,6 +171,7 @@ public class Controller {
 					PointDeBase ptbase = new PointDeBase(result.getPointResult().getX(), result.getPointResult().getY(),
 							result.getPointResult().getZ());
 					toReturn.setPointDroneDTO(ptbase);
+					
 					return toReturn;
 				}
 			}

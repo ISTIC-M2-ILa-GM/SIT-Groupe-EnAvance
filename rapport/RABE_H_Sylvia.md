@@ -20,7 +20,10 @@ L'installation et la mise à disposition du serveur fait aussi partie de notre m
 
 ### Les tâches réalisées :
 * Communiquer avec les 2 équipes Android et drone afin de bien se mettre d'accord par rapport l'architecture optimale et prendre en compte les modifications nécessaires plusieurs fois afin d'améliorer notre application.
-* Rajouter toutes les dépendances nécessaires pour la partie spring boot et mongodb dans le pom XML.
+* Ajout et modification de quelques dépendances dans le pom XML.
+* Installation de "robomongo", interface graphique de MongoDB, pour faciliter les intéractions avec la base de données NoSQL.
+* 
 
 ### Les difficultés rencontrées :
-*
+* La centralisation de MongoDB n'a pas pu se faire car le robomongo ne voulait pas se connecter à une machine voisine que ce soit en SSH ou en mettant directement l'adresse IP d'une machine. Cependant, chacun était en mesure de tester sur leur machine.
+* 

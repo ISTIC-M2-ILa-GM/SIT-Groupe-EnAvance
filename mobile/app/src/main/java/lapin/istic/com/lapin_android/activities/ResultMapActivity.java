@@ -1,7 +1,7 @@
 package lapin.istic.com.lapin_android.activities;
 
 import android.Manifest;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -10,13 +10,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,20 +22,26 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import lapin.istic.com.lapin_android.R;
 import lapin.istic.com.lapin_android.db.DBHandler;
-import lapin.istic.com.lapin_android.model.DronePath;
+import lapin.istic.com.lapin_android.model.ApiManager;
 import lapin.istic.com.lapin_android.model.Point;
+import lapin.istic.com.lapin_android.model.Result;
+import lapin.istic.com.lapin_android.services.DroneService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;
     private LocationManager locationManager;
     private List<Point> listPoint;
-    private DBHandler dbHandler;
+    private Result result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,24 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
         listPoint = new ArrayList<>();
-        dbHandler = new DBHandler(this);
-        //listPoint = dbHandler.getPoints();
+        Intent intent = getIntent();
+        String resultId = intent.getStringExtra("resultat");
+        String missionId = intent.getStringExtra("mission");
+        ApiManager apiManager = ApiManager.getInstance();
+        Callback<Result> callback = new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                if(response.isSuccessful()){
+                    result = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                    t.printStackTrace();
+            }
+        };
+        apiManager.getResult(missionId, resultId, callback);
 
     }
 

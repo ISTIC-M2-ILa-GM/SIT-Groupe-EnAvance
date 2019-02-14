@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 public class Result {
 
 	@Id
-	private Integer id;
+	private String id;
 	private PointResult pointResult;
 	private String pathToImage;
 
@@ -14,18 +14,18 @@ public class Result {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Result(Integer id, PointResult pointResult, String pathToImage) {
+	public Result(String id, PointResult pointResult, String pathToImage) {
 		super();
 		this.id = id;
 		this.pointResult = pointResult;
 		this.pathToImage = pathToImage;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

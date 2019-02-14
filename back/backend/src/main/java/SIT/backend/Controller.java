@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -29,12 +30,9 @@ import SIT.backend.dto.PointsListDTO;
 import SIT.backend.dto.ResultDTO;
 import SIT.backend.entity.CustomSequences;
 import SIT.backend.entity.Mission;
-import SIT.backend.entity.MissionResult;
 import SIT.backend.repository.CustomSequencesRepository;
 import SIT.backend.repository.MissionRepository;
-import SIT.backend.repository.MissionResultRepository;
 import SIT.backend.service.NextSequenceService;
-import SIT.backend.entity.Point;
 import SIT.backend.entity.PointMission;
 import SIT.backend.entity.PointResult;
 import SIT.backend.entity.Result;
@@ -121,11 +119,16 @@ public class Controller {
 		PointResult ptr = new PointResult(ptbase.getX(), ptbase.getY(), ptbase.getZ());
 		result.setPointResult(ptr);
 		result.setPathToImage(path);
+		
+		result.setId(UUID.randomUUID()+""+System.currentTimeMillis());
 
 		Optional<Mission> missionOpt = missionRepository.findById(Integer.parseInt(mission_id));
 		if (missionOpt.isPresent()) {
 			Mission mission = missionOpt.get();
 			List<Result> results = mission.getResults();
+			if(results == null) {
+				results =new ArrayList<Result>();
+			}
 			results.add(result);
 			mission.setResults(results);
 			missionRepository.save(mission);
@@ -133,28 +136,34 @@ public class Controller {
 	}
 
 	/**
-	 * GetPhoto by mission id and photo index
 	 * 
 	 * @throws IOException
 	 */
-	@GetMapping("/{mission_id}/result/{point_index}")
+	@GetMapping("/{mission_id}/result/{result_id}")
 	@ResponseBody
-	public ResultDTO getPhoto(@PathVariable("mission_id") String mission_id,@PathVariable("point_index") String pointIndex) throws IOException {
-		Optional<MissionResult> missionResultOpt = missionResultRepository.findById(Integer.parseInt(pointIndex));
-		MissionResult missionResult = null;
-		if (missionResultOpt.isPresent()) {
-			missionResult = missionResultOpt.get();
+	public ResultDTO getPhoto(@PathVariable("mission_id") String mission_id,
+			@PathVariable("result_id") String result_id) throws IOException {
+		Optional<Mission> missionOpt = missionRepository.findById(Integer.parseInt(mission_id));
+		ResultDTO toReturn = new ResultDTO();
+
+		if (missionOpt.isPresent()) {
+			Mission mission = missionOpt.get();
+			List<Result> results = mission.getResults();
+			for (Result result : results) {
+				if (result.getId().equals(result_id)) {
+					String imageFilePath = result.getPathToImage();
+					// Encode the image file into base64
+					byte[] fileContent = FileUtils.readFileToByteArray(new File(imageFilePath));
+					String encodedImage = Base64.getEncoder().encodeToString(fileContent);
+					toReturn.setPicture(encodedImage);
+					PointDeBase ptbase = new PointDeBase(result.getPointResult().getX(), result.getPointResult().getY(),
+							result.getPointResult().getZ());
+					toReturn.setPointDroneDTO(ptbase);
+					return toReturn;
+				}
+			}
 		}
-		Point pt = missionResult.getPoint();
-		// get the file path from the object result
-		String imageFilePath = pt.getResult().getPathToImage();
-		// Encode the image file into base64
-		byte[] fileContent = FileUtils.readFileToByteArray(new File(imageFilePath));
-		String encodedImage = Base64.getEncoder().encodeToString(fileContent);
-		// put everything together
-		PointDeBase ptd = new PointDeBase(pt.getX(), pt.getY(), pt.getZ());
-		ResultDTO result = new ResultDTO(encodedImage, ptd);
-		return result;
+		return null;
 
 	}
 }

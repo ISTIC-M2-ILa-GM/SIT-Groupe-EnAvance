@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import SIT.backend.entity.MissionResult;
+import SIT.backend.entity.Mission;
 
 @Service
 public class GenerationIdService {
@@ -13,7 +13,7 @@ public class GenerationIdService {
 	// TODO: initialize with the last message ....
 	private String body="";
 
-	public void generer(MissionResult missionResult) throws JSONException {
+	public void generer(Mission missionResult) throws JSONException {
 		
 		
 		JSONObject body = new JSONObject();

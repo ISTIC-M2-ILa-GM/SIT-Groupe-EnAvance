@@ -9,7 +9,8 @@ Développeur Java/JEE
 ## Mission : 
 Notre mission dans l'équipe Back-end était d'implementer les services HTTP REST qui seront appelés 
 par l'application mobile et le drône , et persister les données dans une base de données type NoSQL
-Les technos que j'ai utilisées sont :
+
+## Les technos que j'ai utilisées sont :
 * API REST en Java / Spring Boot
 * Base de données MongoDB
 

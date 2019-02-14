@@ -13,6 +13,9 @@
 # sbteclipse plugin
 .target
 
+#settings
+.settings/
+
 # PyBuilder
 target/
 

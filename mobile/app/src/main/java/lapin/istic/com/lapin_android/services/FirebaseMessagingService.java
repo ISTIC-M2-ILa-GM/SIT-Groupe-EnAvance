@@ -26,6 +26,12 @@ public class    FirebaseMessagingService extends com.google.firebase.messaging.F
             System.out.println("\n\nLa");
 
             Intent intent = new Intent("notif");
+            String resultatId = remoteMessage.getData().get("resultat_id");
+            Log.d("FirebaseMessaginService", "resultat: "+resultatId);
+            String missionId = remoteMessage.getData().get("mission_id");
+            Log.d("FirevaseMessaginService", "missionId: "+missionId);
+            intent.putExtra("resultat", resultatId);
+            intent.putExtra("mission",missionId);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId);
@@ -40,7 +46,7 @@ public class    FirebaseMessagingService extends com.google.firebase.messaging.F
             // Since android Oreo notification channel is needed.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel = new NotificationChannel(channelId,
-                        "Channel human readable title",
+                        "drone",
                         NotificationManager.IMPORTANCE_DEFAULT);
                 notificationManager.createNotificationChannel(channel);
             }
@@ -48,13 +54,5 @@ public class    FirebaseMessagingService extends com.google.firebase.messaging.F
         }
     }
 
-    @Override
-    public void onNewToken(String token) {
-        super.onNewToken(token);
-        sendToServer(token);
-    }
 
-
-    private void sendToServer(String token) {
-    }
 }

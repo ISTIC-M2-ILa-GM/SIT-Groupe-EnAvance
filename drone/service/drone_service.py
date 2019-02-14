@@ -6,21 +6,21 @@ import dronekit_sitl
 from dronekit import connect, Command, VehicleMode
 from pymavlink import mavutil
 
-sitl = dronekit_sitl.start_default()
-connection_string = sitl.connection_string()
-
 
 class DroneService:
     """
     Gestionnaire du drone
     """
 
-    def __init__(self):
+    def __init__(self, latitude_depart, longitude_depart):
         print("Connexion au drone")
+        sitl = dronekit_sitl.start_default(latitude_depart, longitude_depart)
+        connection_string = sitl.connection_string()
+
         self.vehicle = connect(connection_string, wait_ready=True)
         self.positions = []
         self.callback = None
-        self.vehicle.airspeed = 9
+        self.vehicle.airspeed = 90
         pass
 
     def add_point(self, latitude, longitude, altitude, cancel_previous_missions=False):
@@ -54,7 +54,7 @@ class DroneService:
         self.vehicle.commands.next = 0
 
         # Set mode to AUTO to start mission
-        # self.vehicle.mode = VehicleMode("AUTO")
+        self.vehicle.mode = VehicleMode("AUTO")
 
         while True:
             nextwaypoint = self.vehicle.commands.next
@@ -80,7 +80,7 @@ class DroneService:
         """
         self.vehicle.add_attribute_listener('location.global_frame', callback)
         # self.callback = callback
-        # self.vehicle.add_attribute_listener('location.global_frame', self.__callback_wrapper)
+        # self.vehicle.add_attribute_listener('location.local_frame', self.__callback_wrapper)
 
     def __callback_wrapper(self, attr_name, msg):
 

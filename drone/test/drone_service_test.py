@@ -11,7 +11,7 @@ def location_callback(self, attr_name, msg):
     # print("tilt : ", msg.tilt)
 
 
-droneService = DroneService()
+droneService = DroneService(48.115616, -1.638298)
 
 droneService.register_position_callback(location_callback)
 

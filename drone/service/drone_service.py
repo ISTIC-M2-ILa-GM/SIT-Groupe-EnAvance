@@ -18,6 +18,9 @@ class DroneService:
     def __init__(self):
         print("Connexion au drone")
         self.vehicle = connect(connection_string, wait_ready=True)
+        self.positions = []
+        self.callback = None
+        self.vehicle.airspeed = 9
         pass
 
     def add_point(self, latitude, longitude, altitude, cancel_previous_missions=False):
@@ -40,6 +43,7 @@ class DroneService:
 
         cmds.add(cmd)
         cmds.upload()
+        self.positions.append((latitude, longitude, altitude))
 
     def start_missions(self):
         """
@@ -75,6 +79,30 @@ class DroneService:
         :return: nada
         """
         self.vehicle.add_attribute_listener('location.global_frame', callback)
+        # self.callback = callback
+        # self.vehicle.add_attribute_listener('location.global_frame', self.__callback_wrapper)
+
+    def __callback_wrapper(self, attr_name, msg):
+
+        msg.heading = self.vehicle.heading
+        msg.tilt = self.vehicle.attitude
+
+        if self.callback is not None:
+            self.callback(attr_name, msg)
+
+    def heading(self):
+        """
+        Fournit la direction du drone
+        :return:
+        """
+        return self.vehicle.heading
+
+    def tilt(self):
+        """
+        Fournit l'inclinaison du drone
+        :return:
+        """
+        return self.vehicle.attitude
 
     def return_to_base(self):
         """

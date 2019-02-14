@@ -32,4 +32,9 @@ public class ApiManager {
         Call<String> userCall = service.sendMission(user);
         userCall.enqueue(callback);
     }
+
+    public void getResult(String missionId, String resultId, Callback<Result> callback){
+        Call<Result> resultCall = service.getResult(resultId, missionId);
+        resultCall.enqueue(callback);
+    }
 }

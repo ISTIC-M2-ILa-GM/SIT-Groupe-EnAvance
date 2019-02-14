@@ -13,6 +13,9 @@ import android.util.Log;
 import com.google.firebase.messaging.RemoteMessage;
 import lapin.istic.com.lapin_android.R;
 
+/**
+ * @author DESCHAMPS Mathieu
+ */
 public class    FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     @Override
@@ -20,10 +23,8 @@ public class    FirebaseMessagingService extends com.google.firebase.messaging.F
         super.onMessageReceived(remoteMessage);
         String channelId = getString(R.string.default_notification_channel_id);
 
-        System.out.println("\n\nIci");
         if( remoteMessage.getNotification() != null )
         {
-            System.out.println("\n\nLa");
 
             Intent intent = new Intent("notif");
             String resultatId = remoteMessage.getData().get("resultat_id");

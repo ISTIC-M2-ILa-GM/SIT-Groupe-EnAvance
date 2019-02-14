@@ -20,7 +20,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import lapin.istic.com.lapin_android.R;
 
 /**
- * @author KADRI Noureddine
+ * @author KADRI Noureddine && DESCHAMPS Mathieu
  */
 public class MainActivity extends AppCompatActivity {
 

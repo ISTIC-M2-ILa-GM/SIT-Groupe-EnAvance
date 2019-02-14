@@ -1,19 +1,19 @@
 package lapin.istic.com.lapin_android.model;
 
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * @author DESCHAMPS Mathieu
+ */
 public class Result {
 
 
-    private String idResultat;
+
+    @SerializedName("point")
     private Point point;
+    @SerializedName("picture")
     private String imageBase64;
 
-    public String getIdResultat() {
-        return idResultat;
-    }
-
-    public void setIdResultat(String idResultat) {
-        this.idResultat = idResultat;
-    }
 
     public Point getPoint() {
         return point;

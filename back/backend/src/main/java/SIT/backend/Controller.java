@@ -98,7 +98,7 @@ public class Controller {
 	 * 
 	 * @throws IOException
 	 */
-	@PostMapping("/result/{point_index}")
+	@PostMapping("/result/{mission_id}")
 	@ResponseBody
 	public void sendPhoto(@PathVariable("point_index") String pointIndex, @RequestBody ResultDTO resultDTO)
 			throws IOException {

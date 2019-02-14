@@ -37,16 +37,16 @@ public class TestingActivityNK extends AppCompatActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.save_user:
                 DronePath dronePath = new DronePath();
-                dronePath.setId( Integer.valueOf(nameEditText.getText().toString()));
-                MainApplication.apiManager.createUser(dronePath, new Callback<DronePath>() {
+                dronePath.setId( nameEditText.getText().toString());
+                MainApplication.apiManager.createUser(dronePath, new Callback<String>() {
                     @Override
-                    public void onResponse(Call<DronePath> call, Response<DronePath> response) {
-                        DronePath responseDrone = response.body();
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        String responseDrone = response.body();
                         if (response.isSuccessful() && responseDrone != null) {
                             Toast.makeText(TestingActivityNK.this,
                                     String.format("Mission %s with job %s was created at %s with id %s",
-                                            responseDrone.getId(),
-                                            responseDrone.getPoints().toString()),
+                                            responseDrone,
+                                            responseDrone),
                                     Toast.LENGTH_LONG)
                                     .show();
                         } else {
@@ -57,7 +57,7 @@ public class TestingActivityNK extends AppCompatActivity implements View.OnClick
                     }
 
                     @Override
-                    public void onFailure(Call<DronePath> call, Throwable t) {
+                    public void onFailure(Call<String> call, Throwable t) {
                         Toast.makeText(TestingActivityNK.this,
                                 "Error is " + t.getMessage()
                                 , Toast.LENGTH_LONG).show();

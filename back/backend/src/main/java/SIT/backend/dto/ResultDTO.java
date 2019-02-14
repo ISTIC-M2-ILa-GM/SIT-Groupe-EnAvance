@@ -3,17 +3,17 @@ package SIT.backend.dto;
 public class ResultDTO {
 
 	private String picture;
-	private PointDeBase pointDroneDTO;
+	private PointDeBase point;
 
 	public ResultDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResultDTO(String picture, PointDeBase pointDroneDTO) {
+	public ResultDTO(String picture, PointDeBase point) {
 		super();
 		this.picture = picture;
-		this.pointDroneDTO = pointDroneDTO;
+		this.point = point;
 	}
 
 	public String getPicture() {
@@ -25,11 +25,11 @@ public class ResultDTO {
 	}
 
 	public PointDeBase getPointDroneDTO() {
-		return pointDroneDTO;
+		return point;
 	}
 
-	public void setPointDroneDTO(PointDeBase pointDroneDTO) {
-		this.pointDroneDTO = pointDroneDTO;
+	public void setPointDroneDTO(PointDeBase point) {
+		this.point = point;
 	}
 
 }

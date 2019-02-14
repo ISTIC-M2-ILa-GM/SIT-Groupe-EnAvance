@@ -35,6 +35,8 @@ import SIT.backend.repository.MissionRepository;
 import SIT.backend.repository.MissionResultRepository;
 import SIT.backend.service.NextSequenceService;
 import SIT.backend.entity.Point;
+import SIT.backend.entity.PointMission;
+import SIT.backend.entity.PointResult;
 import SIT.backend.entity.Result;
 
 @RestController
@@ -48,8 +50,6 @@ public class Controller {
 	CustomSequencesRepository customSequencesRepository;
 	@Autowired
 	NextSequenceService nextSequenceService;
-	@Autowired
-	MissionResultRepository missionResultRepository;
 
 	/**
 	 * Renvoyer la liste des points d'une mission
@@ -60,10 +60,10 @@ public class Controller {
 		// intialisé l'objet Mission avant de le persister et retourner son id
 		Mission mission = new Mission();
 		// traiter les points reçus
-		List<Point> points = new ArrayList<Point>();
+		List<PointMission> points = new ArrayList<PointMission>();
 		for (PointAndroidDTO ptd : pointsRecus.getPoints()) {
 			// créer notre objet point qui contient toutes les infos
-			Point pt = new Point(ptd.getX(), ptd.getY(), ptd.getZ(), null, ptd.getIndex());
+			PointMission pt = new PointMission(ptd.getX(), ptd.getY(), ptd.getZ(), ptd.getIndex());
 			// rajouter le dans la liste
 			points.add(pt);
 			// indexer le point pour identifier l'image
@@ -100,7 +100,7 @@ public class Controller {
 	 */
 	@PostMapping("/result/{mission_id}")
 	@ResponseBody
-	public void sendPhoto(@PathVariable("point_index") String pointIndex, @RequestBody ResultDTO resultDTO)
+	public void sendPhoto(@PathVariable("mission_id") String mission_id, @RequestBody ResultDTO resultDTO)
 			throws IOException {
 
 		String repPath = "./pictures/";
@@ -108,7 +108,7 @@ public class Controller {
 		BufferedImage image = null;
 		byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(resultDTO.getPicture());
 		// write the image to a file
-		String path = repPath + "image" + pointIndex + ".png";
+		String path = repPath + "imageM" + mission_id + "_" + System.currentTimeMillis() + ".png";
 		File outputFile = new File(path);
 		try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(outputFile))) {
 			outputStream.write(imageBytes);
@@ -116,18 +116,20 @@ public class Controller {
 			e.printStackTrace();
 		}
 
-		MissionResult missionRes = new MissionResult();
-		missionRes.setId(Integer.parseInt(pointIndex));
-		Point pt = new Point();
-		pt.setIndex(Integer.parseInt(pointIndex));
-		Result result = new Result(path);
-		pt.setResult(result);
-		pt.setX(resultDTO.getPointDroneDTO().getX());
-		pt.setY(resultDTO.getPointDroneDTO().getY());
-		pt.setZ(resultDTO.getPointDroneDTO().getZ());
-		missionRes.setPoint(pt);
-		missionResultRepository.save(missionRes);
+		Result result = new Result();
+		PointDeBase ptbase = resultDTO.getPointDroneDTO();
+		PointResult ptr = new PointResult(ptbase.getX(), ptbase.getY(), ptbase.getZ());
+		result.setPointResult(ptr);
+		result.setPathToImage(path);
 
+		Optional<Mission> missionOpt = missionRepository.findById(Integer.parseInt(mission_id));
+		if (missionOpt.isPresent()) {
+			Mission mission = missionOpt.get();
+			List<Result> results = mission.getResults();
+			results.add(result);
+			mission.setResults(results);
+			missionRepository.save(mission);
+		}
 	}
 
 	/**
@@ -135,9 +137,9 @@ public class Controller {
 	 * 
 	 * @throws IOException
 	 */
-	@GetMapping("/result/{point_index}")
+	@GetMapping("/{mission_id}/result/{point_index}")
 	@ResponseBody
-	public ResultDTO getPhoto(@PathVariable("point_index") String pointIndex) throws IOException {
+	public ResultDTO getPhoto(@PathVariable("mission_id") String mission_id,@PathVariable("point_index") String pointIndex) throws IOException {
 		Optional<MissionResult> missionResultOpt = missionResultRepository.findById(Integer.parseInt(pointIndex));
 		MissionResult missionResult = null;
 		if (missionResultOpt.isPresent()) {

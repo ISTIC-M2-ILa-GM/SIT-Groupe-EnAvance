@@ -18,9 +18,9 @@ public interface DroneService {
     public static final String END_POINT = "http://localhost:8080";
 
 
-    @GET("/api/result/{id}")
-    Call<Result> getResult(@Path("id") Integer id, @Path("index") Integer index);
+    @GET("/api/mission/{missionId/result/{id}")
+    Call<Result> getResult(@Path("misionId") String missionId, @Path("id") String id);
 
     @POST("/sendMission")
-    Call<DronePath> sendMission(@Body DronePath dronePath);
+    Call<String> sendMission(@Body DronePath dronePath);
 }

@@ -21,6 +21,7 @@ public class    FirebaseMessagingService extends com.google.firebase.messaging.F
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+        System.out.println("\n\n\nIci");
         String channelId = getString(R.string.default_notification_channel_id);
 
         if( remoteMessage.getNotification() != null )

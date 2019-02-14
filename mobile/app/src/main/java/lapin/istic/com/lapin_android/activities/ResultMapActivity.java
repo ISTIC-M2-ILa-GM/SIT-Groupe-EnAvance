@@ -51,7 +51,7 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
         listPoint = new ArrayList<>();
         dbHandler = new DBHandler(this);
-        //listPoint = dbHandler.getPoints();
+        listPoint = dbHandler.getPoints();
 
     }
 

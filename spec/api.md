@@ -1,4 +1,16 @@
 ## API
+* POST /api/mission
+
+Result:
+```
+    {
+        points: [
+            {index: int, x: double, y: double, z: double},
+            {index: int, x: double, y: double, z: double},
+            {index: int, x: double, y: double, z: double}
+        ]
+    }
+```
 
 * GET /api/mission/last
 
@@ -14,7 +26,7 @@ Result:
     }
 ```
 
-* POST /api/mission/{mission_id}/result/{point_index}
+* POST /api/mission/{mission_id}/result
 
 Result:
 ```

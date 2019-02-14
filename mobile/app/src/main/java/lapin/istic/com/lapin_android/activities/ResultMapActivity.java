@@ -32,6 +32,7 @@ import lapin.istic.com.lapin_android.model.ApiManager;
 import lapin.istic.com.lapin_android.model.Point;
 import lapin.istic.com.lapin_android.model.Result;
 import lapin.istic.com.lapin_android.services.DroneService;
+import lapin.istic.com.lapin_android.utils.ImageParser;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,6 +61,10 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
             public void onResponse(Call<Result> call, Response<Result> response) {
                 if(response.isSuccessful()){
                     result = response.body();
+                    //String base64encode = "image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAYAAAA+VemSAAAgAEl...==' ";
+                    String base64encode = result.getImageBase64();
+                    ImageParser.convertToImage(base64encode);
+
                 }
             }
 

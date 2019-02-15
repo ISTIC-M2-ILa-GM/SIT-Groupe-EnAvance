@@ -16,7 +16,7 @@ par l'application mobile et le drône , et persister les données dans une base 
 
 
 ### les Taches réalisées :
-* Communiquer avec les 2 équipes Android et drone afin de bien se mettre d'accord par rapport l'architecture optimale et prendre en compte les modifications nécessaires plusieurs fois afin d'améliorer notre application.
+* Communiquer avec les 2 équipes Android et drone afin de bien se mettre d'accord par rapport à l'architecture optimale et prendre en compte les modifications nécessaires plusieurs fois afin d'améliorer notre application.
 * Rajouter toutes les dépendances nécessaires pour la partie spring boot et mongodb dans le pom XML.
 * Créer toutes les classes entités à persister et leurs repositories.
 * Créer le service "NextSequenceService" qui nous permet de générer des index automatiquement incrémentés pour le document Mission et garantir leur unicité.

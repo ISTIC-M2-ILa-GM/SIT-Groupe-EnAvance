@@ -58,8 +58,9 @@ def give_orders(miss, dro):
         print a["x"], a["y"], a["z"], first
         dro.add_point(a["x"], a["y"], a["z"], first)
         first = False
-
+    print "give orders0"
     dro.start_missions()
+    print "give orders1"
 
 
 drone_monitor = None
@@ -145,9 +146,9 @@ if __name__ == '__main__':
 
     while execute:
         mission = retrieving_mission()
-
+        print "retriv-give"
         give_orders(mission, drone)
-
+        print "give-monit"
         monitoring_mission(mission, drone)
 
         execute = False

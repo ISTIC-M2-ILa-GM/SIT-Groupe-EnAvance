@@ -1,0 +1,19 @@
+@startuml
+component "Application Mobile" as mo
+cloud Firebase as f
+node "Serveur de communication" as serv {
+    component "Application Drone" as appdrone
+    component "Application Serveur" as appserv
+    database "Base de\ndonnées" as db
+}
+interface "Drone" as drone
+actor "Utilisateur" as u
+
+mo <- u: IHM
+mo -> appserv: API REST
+appserv --> f: Notification Push
+f --> mo: Notification Push
+appserv --> db
+appserv <- appdrone: API REST
+appdrone -> drone: MAVLink
+@enduml

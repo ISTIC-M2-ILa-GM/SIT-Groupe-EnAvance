@@ -1,5 +1,3 @@
-import base64
-
 from scripts import config
 from scripts.common import *
 
@@ -33,10 +31,3 @@ def send_photo(mission_id, result_dto):
     url = hostServer + "/api/result/" + str(mission_id)
     res = post_request(url, result_dto)
     return res
-
-
-def image_to_b64(file_path):
-    with open(file_path, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
-
-    return encoded_string

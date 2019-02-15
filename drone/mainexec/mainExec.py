@@ -67,7 +67,7 @@ def monitoring_mission(miss, dr):
     drone_monitor = {"end_mission_lat": miss["points"][-1]["x"],
                      "end_mission_lon": miss["points"][-1]["y"],
                      "current_lat": None,
-                     "current_lat": None,
+                     "current_lon": None,
                      "a_change_position": False,
                      "a_atteint_point_final": False
                      }

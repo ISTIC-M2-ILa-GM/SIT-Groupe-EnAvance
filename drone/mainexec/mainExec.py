@@ -69,6 +69,7 @@ def monitoring_mission(miss, dr):
     """
     Ecoute les status du drone et trensmet les données jusqu'en fin mission
     """
+    print "monitor mission0"
     global drone_monitor
     drone_monitor = {"end_mission_lat": miss["points"][-1]["x"],
                      "end_mission_lon": miss["points"][-1]["y"],
@@ -80,7 +81,7 @@ def monitoring_mission(miss, dr):
                      }
 
     mission_is_over = False
-
+    print "monitor mission1"
     dr.register_position_callback(react_to_position)
 
     while not mission_is_over:

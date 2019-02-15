@@ -50,6 +50,7 @@ class DroneService:
         Démarre le drone et le fait executer les missions préalablement chargé
         :return:
         """
+        print("Début de la mission")
         self.__arm_and_takeoff(5)
         self.vehicle.commands.next = 0
 
@@ -58,18 +59,6 @@ class DroneService:
 
         while True:
             nextwaypoint = self.vehicle.commands.next
-            print("current position :")
-            print(self.vehicle.location.global_frame.lat)
-            print(self.vehicle.location.global_frame.lon)
-            print(self.vehicle.location.global_frame.alt)
-
-            # print('Distance to waypoint (%s): %s' % (nextwaypoint, distance_to_current_waypoint()))
-            # if nextwaypoint == 3:  # Skip to next waypoint
-            #     print('Skipping to Waypoint 5 when reach waypoint 3')
-            #     self.vehicle.commands.next = 5
-            # if nextwaypoint == 5:  # Dummy waypoint - as soon as we reach waypoint 4 this is true and we exit.
-            #     print("Exit 'standard' mission when start heading to final waypoint (5)")
-            #     break;
             time.sleep(100)
 
     def register_position_callback(self, callback):
@@ -82,8 +71,8 @@ class DroneService:
         # self.callback = callback
         # self.vehicle.add_attribute_listener('location.local_frame', self.__callback_wrapper)
 
-    def __callback_wrapper(self, attr_name, msg):
-
+    def __callback_wrapper(self, attr_name, msg, fourth_arg):
+        print("callback_wrapper")
         msg.heading = self.vehicle.heading
         msg.tilt = self.vehicle.attitude
 

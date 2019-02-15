@@ -1,9 +1,24 @@
 # coding=utf-8
+import math
 import time
 
-from scripts.utilities import dist
 from service.drone_service import DroneService
 from service.retreive_last_mission import get_last_mission
+
+
+"""
+Calcul la distance entre deux positions gps en metre
+"""
+
+
+def dist(lat1, long1, lat2, long2):
+    delta_lat = lat1-lat2
+    delta_long = long1-long2
+    cos_lat_moy = math.cos((lat1+lat2)/2)
+
+    toReturn = 6366346*math.pow(math.pow(delta_lat, 2) + math.pow(cos_lat_moy*delta_long), 0.5)
+    return toReturn
+
 
 '''
 Boucle d'attente des données d'une mission

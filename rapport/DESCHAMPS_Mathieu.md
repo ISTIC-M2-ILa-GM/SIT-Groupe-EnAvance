@@ -26,7 +26,7 @@ Dans cette partie du projet, nous avons développé une application mobile Andro
 
 - Quelques problème de gestion des dépendances à l'initialisation du projet.
 
-- Soucis sur les background notification qui ne nous emmene pas sur la bonne activité lorsqu'on clique dessus (pas encore résolu).
+- Soucis sur les background notification qui ne nous emmene pas sur la bonne activité lorsqu'on clique dessus (résolu).
 
 
   

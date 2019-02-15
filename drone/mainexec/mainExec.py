@@ -1,6 +1,9 @@
 # coding=utf-8
 import math
 import time
+import os
+import subprocess
+import shlex
 
 from dto.dto import PointDeBase, ResultDTO
 from scripts.google_earth_fly_link_file import write_coord_xml
@@ -122,6 +125,14 @@ if __name__ == '__main__':
     '''
     Script principal de récupération de mission, avant transmition au drône puis attente de la fn de la mission avant retour à l'attente de mission
     '''
+
+    filename = os.path.join(os.getcwd(), "../scripts/temp/camera_link_file.kml")
+    command = "google-earth-pro " + filename
+    args = shlex.split(command)
+    p = subprocess.Popen(args)
+    # sleep 5 seconds pour le lancement de google earth
+    time.sleep(5)
+
     execute = True
 
     drone = DroneService(48.115616, -1.638298)

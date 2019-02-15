@@ -11,12 +11,14 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +37,7 @@ import SIT.backend.repository.CustomSequencesRepository;
 import SIT.backend.repository.MissionRepository;
 import SIT.backend.service.GenerationIdService;
 import SIT.backend.service.NextSequenceService;
+import SIT.backend.service.androidPushNotificationsService;
 import SIT.backend.entity.PointMission;
 import SIT.backend.entity.PointResult;
 import SIT.backend.entity.Result;
@@ -139,7 +142,11 @@ public class Controller {
 			missionRepository.save(mission);
 			try {
 				// Obtenir les id pour la notification du client mobile
-				generationIdService.generer(result.getId(), mission_id);
+				String body = generationIdService.generer(result.getId(), mission_id);
+				HttpEntity<String> request = new HttpEntity<>(body);
+				 
+				CompletableFuture<String> pushNotification = androidPushNotificationsService.send(request);
+				CompletableFuture.allOf(pushNotification).join();
 			} catch (JSONException e) {
 		
 				e.printStackTrace();

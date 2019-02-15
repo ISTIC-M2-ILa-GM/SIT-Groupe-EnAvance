@@ -10,10 +10,8 @@ import SIT.backend.entity.Mission;
 public class GenerationIdService {
 	
 	private final String TOPIC = "drone";
-	// TODO: initialize with the last message ....
-	private String body="";
 
-	public void generer(String id_result, String id_mission) throws JSONException {
+	public String generer(String id_result, String id_mission) throws JSONException {
 		
 		
 		JSONObject body = new JSONObject();
@@ -28,7 +26,7 @@ public class GenerationIdService {
 	
 		
 		data.put("mission_id",id_mission);
-		data.put("result_id", id_result);
+		data.put("resultat_id", id_result);
  
 		body.put("notification", notification);
 		body.put("data", data);
@@ -49,15 +47,12 @@ public class GenerationIdService {
 		}
 */
 				
-		this.body = body.toString();
+		return body.toString();
  
 		
 	}
 	
 
-	public String getBody() {
-		return body;
-	}
 
 
 }

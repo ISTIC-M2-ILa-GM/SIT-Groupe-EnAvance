@@ -16,7 +16,7 @@ public class androidPushNotificationsService {
 	private static final String FIREBASE_API_URL = "https://fcm.googleapis.com/fcm/send";
 	
 	@Async
-	public CompletableFuture<String> send(HttpEntity<String> entity) {
+	public static CompletableFuture<String> send(HttpEntity<String> entity) {
  
 		RestTemplate restTemplate = new RestTemplate();
  

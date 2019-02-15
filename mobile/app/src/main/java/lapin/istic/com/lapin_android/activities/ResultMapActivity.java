@@ -54,7 +54,6 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
         listPoint = new ArrayList<>();
         dbHandler = new DBHandler(this);
-        listPoint = dbHandler.getPoints();
         Intent intent = getIntent();
         String resultId = intent.getStringExtra("resultat");
         String missionId = intent.getStringExtra("mission");
@@ -76,7 +75,7 @@ public class ResultMapActivity extends AppCompatActivity implements OnMapReadyCa
                     t.printStackTrace();
             }
         };
-        apiManager.getResult(missionId, resultId, callback);
+        //apiManager.getResult(missionId, resultId, callback);
 
     }
 

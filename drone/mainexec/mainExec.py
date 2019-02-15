@@ -84,8 +84,10 @@ def monitoring_mission(miss, dr):
     dr.register_position_callback(react_to_position)
 
     while not mission_is_over:
+        print "check state"
 
         if drone_monitor["a_change_position"]:
+            print "changed position"
             # notifier server et aquisition
             # TODO implement image transmition
             write_coord_xml(drone_monitor["current_lat"], drone_monitor["current_lon"], drone_monitor["current_alt"])
@@ -96,6 +98,7 @@ def monitoring_mission(miss, dr):
 
             drone_monitor["a_change_position"] = False
         elif drone_monitor["a_atteint_point_final"]:
+            print "reached end mission"
             # donne ordre de retourner se poser
             dr.return_to_base()
             mission_is_over = True
@@ -108,6 +111,7 @@ def react_to_position(self, attr_name, msg):
     callback change drone_monitor according to position lisner
     """
     global drone_monitor
+    print "callback: ", msg.lat, " ", msg.lon, " ", msg.alt
 
     if 5 > dist(drone_monitor["end_mission_lat"], drone_monitor["end_mission_lon"], msg.lat, msg.lon):
         drone_monitor["a_atteint_point_final"] = True
@@ -128,6 +132,7 @@ if __name__ == '__main__':
 
     filename = os.path.join(os.getcwd(), "../scripts/temp/camera_link_file.kml")
     command = "google-earth-pro " + filename
+    print command
     args = shlex.split(command)
     p = subprocess.Popen(args)
     # sleep 5 seconds pour le lancement de google earth

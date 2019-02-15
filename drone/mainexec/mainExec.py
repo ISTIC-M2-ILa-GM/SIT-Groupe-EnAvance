@@ -3,6 +3,8 @@ import math
 import time
 
 from dto.dto import PointDeBase, ResultDTO
+from scripts.google_earth_fly_link_file import write_coord_xml
+from scripts.screenshot import take_screenshot
 from service.drone_service import DroneService
 from service.retreive_last_mission import get_last_mission, send_photo
 
@@ -83,10 +85,10 @@ def monitoring_mission(miss, dr):
         if drone_monitor["a_change_position"]:
             # notifier server et aquisition
             # TODO implement image transmition
-            image = "blabla"
-
+            write_coord_xml(drone_monitor["current_lat"], drone_monitor["current_lon"], drone_monitor["current_alt"])
+            path_image = take_screenshot()
             point = PointDeBase(drone_monitor["current_lat"], drone_monitor["current_lon"], drone_monitor["current_alt"])
-            result_dto = ResultDTO(image, point)
+            result_dto = ResultDTO(path_image, point)
             send_photo(miss["id"], result_dto)
 
             drone_monitor["a_change_position"] = False

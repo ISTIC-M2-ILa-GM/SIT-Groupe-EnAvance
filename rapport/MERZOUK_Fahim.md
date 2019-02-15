@@ -1,5 +1,6 @@
 # PROJET SIT : MERZOUK Fahim 
-## Projet LAPIN
+## Projet LAPIN 
+## Partie Drone
 ### Role dans l'équipe
 Développeur, référent Python
 ### Taches réalisées

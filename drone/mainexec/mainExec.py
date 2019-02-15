@@ -2,8 +2,9 @@
 import math
 import time
 
+from dto.dto import PointDeBase, ResultDTO
 from service.drone_service import DroneService
-from service.retreive_last_mission import get_last_mission
+from service.retreive_last_mission import get_last_mission, send_photo
 
 
 def dist(lat1, long1, lat2, long2):
@@ -68,6 +69,7 @@ def monitoring_mission(miss, dr):
                      "end_mission_lon": miss["points"][-1]["y"],
                      "current_lat": None,
                      "current_lon": None,
+                     "current_alt": None,
                      "a_change_position": False,
                      "a_atteint_point_final": False
                      }
@@ -81,6 +83,12 @@ def monitoring_mission(miss, dr):
         if drone_monitor["a_change_position"]:
             # notifier server et aquisition
             # TODO implement image transmition
+            image = "blabla"
+
+            point = PointDeBase(drone_monitor["current_lat"], drone_monitor["current_lon"], drone_monitor["current_alt"])
+            result_dto = ResultDTO(image, point)
+            send_photo(miss["id"], result_dto)
+
             drone_monitor["a_change_position"] = False
         elif drone_monitor["a_atteint_point_final"]:
             # donne ordre de retourner se poser
@@ -102,6 +110,7 @@ def react_to_position(self, attr_name, msg):
     if drone_monitor["current_lat"] is None:
         drone_monitor["current_lat"] = msg.lat
         drone_monitor["current_lon"] = msg.lon
+        drone_monitor["current_alt"] = msg.alt
 
     if 5 > dist(drone_monitor["current_lat"], drone_monitor["current_lon"], msg.lat, msg.lon):
         drone_monitor["a_change_position"] = True

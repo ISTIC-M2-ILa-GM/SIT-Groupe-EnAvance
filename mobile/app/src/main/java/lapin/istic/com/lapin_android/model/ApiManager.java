@@ -17,7 +17,7 @@ public class ApiManager {
     private ApiManager() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://reqres.in/api/")
+                .baseUrl(DroneService.END_POINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -28,8 +28,8 @@ public class ApiManager {
         return apiManager;
     }
 
-    public void createUser(DronePath user, Callback<String> callback) {
-        Call<String> userCall = service.sendMission(user);
+    public void createMissionApi(DronePath mission, Callback<String> callback) {
+        Call<String> userCall = service.sendMission(mission);
         userCall.enqueue(callback);
     }
 

@@ -2,8 +2,6 @@ package lapin.istic.com.lapin_android.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 
 import lapin.istic.com.lapin_android.db.DBHandler;
@@ -13,7 +11,6 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,7 +24,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -127,6 +123,33 @@ public class    LocationActivity extends AppCompatActivity
                     for(Point point: listPoint){
                         dbHandler.addPoint(point);
                     }
+                    MainActivity.apiManager.createMissionApi(dronePath, new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            String responseDrone = response.body();
+                            if (response.isSuccessful() && responseDrone != null) {
+                                Toast.makeText(LocationActivity.this,
+                                        String.format("Mission was created at %s with id %s",
+                                                responseDrone),
+                                        Toast.LENGTH_LONG)
+                                        .show();
+                            } else {
+                                Toast.makeText(LocationActivity.this,
+                                        String.format("Response is %s", String.valueOf(response.code()))
+                                        , Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Toast.makeText(LocationActivity.this,
+                                    "Error is " + t.getMessage()
+                                    , Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+
+
                 }
 
                 return true;

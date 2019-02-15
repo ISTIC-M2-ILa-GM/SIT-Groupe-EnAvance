@@ -38,7 +38,7 @@ public class PostTestingActivity extends AppCompatActivity implements View.OnCli
             case R.id.save_user:
                 DronePath dronePath = new DronePath();
                 dronePath.setId( nameEditText.getText().toString());
-                MainApplication.apiManager.createUser(dronePath, new Callback<String>() {
+                MainApplication.apiManager.createMissionApi(dronePath, new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         String responseDrone = response.body();

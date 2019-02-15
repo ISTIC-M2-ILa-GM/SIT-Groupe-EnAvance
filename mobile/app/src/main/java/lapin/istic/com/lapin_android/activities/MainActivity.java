@@ -16,6 +16,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import lapin.istic.com.lapin_android.R;
+import lapin.istic.com.lapin_android.model.ApiManager;
 
 /**
  * @author KADRI Noureddine && DESCHAMPS Mathieu
@@ -25,12 +26,14 @@ public class MainActivity extends AppCompatActivity {
     public static final String TOPIC = "drone";
     private Button startFlying;
     private Button resultMap;
-    private Button testnk;
+   // private Button testnk;
+    public static ApiManager apiManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        apiManager = ApiManager.getInstance();
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         startFlying = (Button) findViewById(R.id.start_flying);
-        testnk = (Button) findViewById(R.id.testnk);
+       // testnk = (Button) findViewById(R.id.testnk);
 
         startFlying.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,14 +92,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        testnk.setOnClickListener(new View.OnClickListener() {
+       /* testnk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), PostTestingActivity.class);
                 startActivityForResult(intent, 0);
 
             }
-        });
+        });*/
     }
 
 }

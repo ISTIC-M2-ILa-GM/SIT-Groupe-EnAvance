@@ -56,11 +56,11 @@ class DroneService:
 
         # Set mode to AUTO to start mission
         self.vehicle.mode = VehicleMode("AUTO")
-
+        """
         while True:
             nextwaypoint = self.vehicle.commands.next
             time.sleep(100)
-
+        """
     def register_position_callback(self, callback):
         """
         Enregistre un callback qui est appelé à chaque changement de position du drone

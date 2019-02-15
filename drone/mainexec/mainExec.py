@@ -20,7 +20,7 @@ def dist(lat1, long1, lat2, long2):
     delta_long = long1-long2
     cos_lat_moy = math.cos((lat1+lat2)/2)
 
-    toReturn = 6366346*math.pow(math.pow(delta_lat, 2) + math.pow(cos_lat_moy*delta_long), 0.5)
+    toReturn = 6366346*math.pow(math.pow(delta_lat, 2) + math.pow(cos_lat_moy*delta_long, 2), 0.5)
     return toReturn
 
 
@@ -31,14 +31,17 @@ def retrieving_mission():
     temp_mission_found = False
     while not temp_mission_found:
 
-        temp_mission = {
+        temp_mission = get_last_mission()
+        """
+            {
             "id": 2,
             "points": [
                 {"index": 0, "x": 48.121045, "y": -1.6451528, "z": 300},
                 {"index": 1, "x": 48.121545, "y": -1.6451528, "z": 300},
                 {"index": 2, "x": 48.122045, "y": -1.6451528, "z": 300}
             ]
-        }  # get_last_mission()
+        } 
+        """
         if temp_mission is not None:
             temp_mission_found = True
 
@@ -95,8 +98,8 @@ def monitoring_mission(miss, dr):
             write_coord_xml(drone_monitor["current_lat"], drone_monitor["current_lon"], drone_monitor["current_alt"])
             path_image = take_screenshot()
             point = PointDeBase(drone_monitor["current_lat"], drone_monitor["current_lon"], drone_monitor["current_alt"])
-            result_dto = ResultDTO(path_image, point)
-            send_photo(miss["id"], result_dto)
+            result_dto = ResultDTO(path_image, point.__dict__)
+            send_photo(miss["id"], result_dto.__dict__)
 
             drone_monitor["a_change_position"] = False
         elif drone_monitor["a_atteint_point_final"]:

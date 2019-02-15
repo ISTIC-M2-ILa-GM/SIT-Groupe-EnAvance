@@ -54,7 +54,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activities.TestingActivityNK"></activity>
+        <activity android:name=".activities.PostTestingActivity"></activity>
     </application>
 
 </manifest>

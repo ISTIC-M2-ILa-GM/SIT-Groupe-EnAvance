@@ -2,7 +2,7 @@ import os
 
 
 def take_screenshot():
-    screen = "temp/screenshot.png"
+    screen = "/tmp/screenshot.png"
     command = "import -window root "+screen
     os.system(command)
     print(command)

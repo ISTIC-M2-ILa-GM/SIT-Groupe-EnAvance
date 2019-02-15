@@ -25,6 +25,6 @@ def write_coord_xml(lat, lon, alt):
              'altitude': alt,
              'heading': 160.0 + 80,
              'tilt': 90.0}
-    with open("temp/camera_tmp.kml", "w") as kml_file:
+    with open("/tmp/camera_tmp.kml", "w") as kml_file:
         kml_file.write(kml_template.format(**coord))
 

@@ -1,4 +1,4 @@
-# LARZILIÈRE Charles
+# LARZILLIÈRE Charles
 
 # Equipe BackEnd
 
@@ -17,8 +17,8 @@ Sauvegarder les données dans une base de données type NoSQL.
 
 ### les Taches réalisées :
 _PAIR PROGRAMMING AVEC BASHAR NEMEH_
-* Communiquer avec les 2 équipes Android et drone afin de bien se mettre d'accord par rapport à l'architecture optimale et prendre en compte les modifications nécessaires plusieurs fois afin d'améliorer notre application.
 * Découverte de MongoDB
+* Communiquer avec les 2 équipes Android et drone afin de bien se mettre d'accord par rapport à l'architecture optimale et prendre en compte les modifications nécessaires plusieurs fois afin d'améliorer notre application.
 * Créer les classes entités à persister et leurs repositories.
 * Créer les classes DTO afin de les utiliser dans les requêtes HTTP Rest
 * Créer la classe controller qui contient 4 services HTTP REST :

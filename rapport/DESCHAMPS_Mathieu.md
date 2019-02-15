@@ -1,4 +1,3 @@
-
 ## Rapport SIT
 ### Groupe A
 ### Application Mobile
@@ -28,5 +27,3 @@ Dans cette partie du projet, nous avons développé une application mobile Andro
 
 - Soucis sur les background notification qui ne nous emmene pas sur la bonne activité lorsqu'on clique dessus (résolu).
 
-
-  

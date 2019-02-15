@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Lapin-ANDROID</string>
+    <string name="hello">Hello Lapin!</string>
+    <string name="result">Show Result Map</string>
+    <string name="start_flying">Start New Mission</string>
+    <string name="normal_map">Normal</string>
+    <string name="hybrid_map">Hybrid</string>
+    <string name="satellite_map">Satellite</string>
+    <string name="terrain_map">Terrain</string>
+    <string name="dropped_pin">Dropped in</string>
+    <string name="Open_google_map">Open Google Map</string>
+    <string name="input_height">  Input Height…</string>
+    <string name="send_drone">Send Drone</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="title_activity_result_map">ResultMapActivity</string>
+
 </resources>

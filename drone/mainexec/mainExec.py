@@ -31,9 +31,9 @@ def retrieving_mission():
         temp_mission = {
             "id": 2,
             "points": [
-                {"index": 0, "x": 1.001, "y": 2.003, "z": 22},
-                {"index": 1, "x": 1.001, "y": 2.003, "z": 22},
-                {"index": 2, "x": 1.001, "y": 2.003, "z": 22}
+                {"index": 0, "x": 48.121045, "y": -1.6451528, "z": 300},
+                {"index": 1, "x": 48.121545, "y": -1.6451528, "z": 300},
+                {"index": 2, "x": 48.122045, "y": -1.6451528, "z": 300}
             ]
         }  # get_last_mission()
         if temp_mission is not None:

@@ -57,6 +57,16 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        Intent intent = getIntent();
+        if( intent != null && intent.getStringExtra("mission_id") != null )
+        {
+            Intent nintent =  new Intent(this,ResultMapActivity.class);
+            intent.putExtra("mission",intent.getStringExtra("mission_id"));
+            intent.putExtra("resultat",intent.getStringExtra("resultat_id"));
+            startActivity(nintent);
+
+        }
         startFlying = (Button) findViewById(R.id.start_flying);
         testnk = (Button) findViewById(R.id.testnk);
 

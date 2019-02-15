@@ -26,8 +26,8 @@ def get_last_mission():
     return res
 
 
-def send_photo(id, result_dto):
+def send_photo(mission_id, result_dto):
     hostServer = config.hostServer
-    url = hostServer + "/api/result/" + str(id)
+    url = hostServer + "/api/result/" + str(mission_id)
     res = post_request(url, result_dto)
     return res

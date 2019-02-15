@@ -7,7 +7,7 @@ Développeur, référent Python
   * Initialisation du projet Python avec le virtual environnement
   * Implémentation des requetes POST et GET pour récupérer les missions, et poster les images 
   * Personnalisation du script de visualisation du parcours du drone sur **Google Earth**
-  * Screenshot sur Google Earth **En cours**
+  * Screenshot sur Google Earth
 
 ### Difficultés
   * Manque de temps pour perfectionner le travail

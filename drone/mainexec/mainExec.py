@@ -122,7 +122,7 @@ if __name__ == '__main__':
     '''
     execute = True
 
-    drone = DroneService()
+    drone = DroneService(48.115616, -1.638298)
 
     while execute:
         mission = retrieving_mission()

@@ -16,7 +16,7 @@ import retrofit2.Response;
 /**
  * @author Noureddine KADRI
  */
-public class TestingActivityNK extends AppCompatActivity implements View.OnClickListener {
+public class PostTestingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText nameEditText;
     private EditText jobEditText;
@@ -25,7 +25,7 @@ public class TestingActivityNK extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_testing_nk);
+        setContentView(R.layout.activity_post_testing);
         nameEditText = findViewById(R.id.name);
         jobEditText = findViewById(R.id.job);
         saveUserButton = findViewById(R.id.save_user);
@@ -43,14 +43,13 @@ public class TestingActivityNK extends AppCompatActivity implements View.OnClick
                     public void onResponse(Call<String> call, Response<String> response) {
                         String responseDrone = response.body();
                         if (response.isSuccessful() && responseDrone != null) {
-                            Toast.makeText(TestingActivityNK.this,
+                            Toast.makeText(PostTestingActivity.this,
                                     String.format("Mission %s with job %s was created at %s with id %s",
-                                            responseDrone,
                                             responseDrone),
                                     Toast.LENGTH_LONG)
                                     .show();
                         } else {
-                            Toast.makeText(TestingActivityNK.this,
+                            Toast.makeText(PostTestingActivity.this,
                                     String.format("Response is %s", String.valueOf(response.code()))
                                     , Toast.LENGTH_LONG).show();
                         }
@@ -58,7 +57,7 @@ public class TestingActivityNK extends AppCompatActivity implements View.OnClick
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-                        Toast.makeText(TestingActivityNK.this,
+                        Toast.makeText(PostTestingActivity.this,
                                 "Error is " + t.getMessage()
                                 , Toast.LENGTH_LONG).show();
                     }

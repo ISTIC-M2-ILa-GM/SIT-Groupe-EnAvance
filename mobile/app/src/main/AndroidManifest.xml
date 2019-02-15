@@ -12,9 +12,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/lapinlogo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/lapinlogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity">
@@ -54,7 +54,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activities.TestingActivityNK"></activity>
+        <activity android:name=".activities.PostTestingActivity"></activity>
     </application>
 
 </manifest>

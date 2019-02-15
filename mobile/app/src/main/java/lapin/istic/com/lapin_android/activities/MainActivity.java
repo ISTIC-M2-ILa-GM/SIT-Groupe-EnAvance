@@ -1,14 +1,12 @@
 package lapin.istic.com.lapin_android.activities;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -59,6 +57,16 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        Intent intent = getIntent();
+        if( intent != null && intent.getStringExtra("mission_id") != null )
+        {
+            Intent nintent =  new Intent(this,ResultMapActivity.class);
+            intent.putExtra("mission",intent.getStringExtra("mission_id"));
+            intent.putExtra("resultat",intent.getStringExtra("resultat_id"));
+            startActivity(nintent);
+
+        }
         startFlying = (Button) findViewById(R.id.start_flying);
         testnk = (Button) findViewById(R.id.testnk);
 
@@ -84,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         testnk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), TestingActivityNK.class);
+                Intent intent = new Intent(getBaseContext(), PostTestingActivity.class);
                 startActivityForResult(intent, 0);
 
             }

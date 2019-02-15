@@ -6,12 +6,10 @@ from service.drone_service import DroneService
 from service.retreive_last_mission import get_last_mission
 
 
-"""
-Calcul la distance entre deux positions gps en metre
-"""
-
-
 def dist(lat1, long1, lat2, long2):
+    """
+    Calcul la distance entre deux positions gps en metre
+    """
     delta_lat = lat1-lat2
     delta_long = long1-long2
     cos_lat_moy = math.cos((lat1+lat2)/2)
@@ -20,12 +18,10 @@ def dist(lat1, long1, lat2, long2):
     return toReturn
 
 
-'''
-Boucle d'attente des données d'une mission
-'''
-
-
 def retrieving_mission():
+    """
+    Boucle d'attente des données d'une mission
+    """
     temp_mission_found = False
     while not temp_mission_found:
 
@@ -46,12 +42,10 @@ def retrieving_mission():
     return temp_mission
 
 
-'''
-Envoi les  parapètres de mission au drone 
-'''
-
-
 def give_orders(miss, dro):
+    """
+    Envoi les  parapètres de mission au drone
+    """
     first = True
 
     for a in miss["points"]:
@@ -62,16 +56,12 @@ def give_orders(miss, dro):
     dro.start_missions()
 
 
-'''
-Ecoute les status du drone et trensmet les données jusqu'en fin mission 
-'''
-
 drone_monitor = None
 
 
 def monitoring_mission(miss, dr):
     """
-    TODO handel listners
+    Ecoute les status du drone et trensmet les données jusqu'en fin mission
     """
     global drone_monitor
     drone_monitor = {"end_mission_lat": miss["points"][-1]["x"],
@@ -101,6 +91,9 @@ def monitoring_mission(miss, dr):
 
 
 def react_to_position(self, attr_name, msg):
+    """
+    callback change drone_monitor according to position lisner
+    """
     global drone_monitor
 
     if 5 > dist(drone_monitor["end_mission_lat"], drone_monitor["end_mission_lon"], msg.lat, msg.lon):
@@ -114,12 +107,10 @@ def react_to_position(self, attr_name, msg):
         drone_monitor["a_change_position"] = True
 
 
-'''
-Script principal de récupération de mission, avant transmition au drône puis attente de la fn de la mission avant retour à l'attente de mission
-'''
-
 if __name__ == '__main__':
-
+    '''
+    Script principal de récupération de mission, avant transmition au drône puis attente de la fn de la mission avant retour à l'attente de mission
+    '''
     execute = True
 
     drone = DroneService()

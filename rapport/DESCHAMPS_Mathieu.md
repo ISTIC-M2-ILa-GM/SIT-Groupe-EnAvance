@@ -18,11 +18,11 @@ Dans cette partie du projet, nous avons développé une application mobile Andro
 
 - Gestion des notification push via la classe de service FirebaseMessaginService ( ainsi que l'inscription au topic drone dans la MainActivity)
 
--Conception des notifs avec Mounir au back-end
+- Conception des notifs avec Mounir au back-end
 
 - Discussion avec une designeuse pour la conception du logo de l'application ( ok c'est pas de l'info mais quand même ^^)
 
-## Difficultées rencontré
+## Difficultés rencontrées
 
 - Quelques problème de gestion des dépendances à l'initialisation du projet.
 

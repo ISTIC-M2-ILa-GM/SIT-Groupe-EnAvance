@@ -63,3 +63,7 @@ Et saisir dans votre console :
 ```pip install -r requirements.txt```
 
   
+### Google earth
+```bash
+google-earth-pro $PWD/camera_link_file.kml
+```

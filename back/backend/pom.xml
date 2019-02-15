@@ -22,8 +22,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<docker.image.prefix>lapindock</docker.image.prefix>
 		<java.version>1.8</java.version>		
+		<docker.image.prefix>lapindocker</docker.image.prefix>
 		<build.version>${project.version}</build.version>
 	</properties>
 	
@@ -63,23 +63,24 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
 			<plugin>
 				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.4.5</version>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.3.4</version>
 				<configuration>
-					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-					<dockerDirectory>src/main</dockerDirectory>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
 				</configuration>
-			</plugin>
-			
+				<executions>
+					<execution>
+						<id>default</id>
+						<phase>install</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+</plugin>
 		</plugins>
 	</build>
 

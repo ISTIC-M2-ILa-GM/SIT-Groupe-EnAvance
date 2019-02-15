@@ -1,0 +1,16 @@
+version: "2.1"
+services:
+  mongo:
+    image: mongo:3.2.4
+    ports:
+    - 27017:27017
+    #command: --smallfiles
+    
+# APP  ***************************************************************************************
+  spring-boot-mongo-docker:
+    image: lapindocker/spring-boot-mongo-docker
+    ports:
+    - 8080:8080
+    links:
+    - mongo
+    entrypoint: "java -jar /app.jar"

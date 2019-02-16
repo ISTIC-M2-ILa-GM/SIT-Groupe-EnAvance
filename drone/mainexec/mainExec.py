@@ -12,16 +12,24 @@ from service.drone_service import DroneService
 from service.retreive_last_mission import get_last_mission, send_photo
 
 
-def dist(lat1, long1, lat2, long2):
+def dist(latd1, longd1, latd2, longd2):
     """
     Calcul la distance entre deux positions gps en metre
     """
+    lat1 = math.radians(latd1)
+    lat2 = math.radians(latd2)
+    long1 = math.radians(longd1)
+    long2 = math.radians(longd2)
+
+    radius = 6371009
+
     delta_lat = lat1-lat2
     delta_long = long1-long2
     cos_lat_moy = math.cos((lat1+lat2)/2)
 
-    toReturn = 6366346*math.pow(math.pow(delta_lat, 2) + math.pow(cos_lat_moy*delta_long, 2), 0.5)
-    return toReturn
+    to_return = radius*math.pow(math.pow(delta_lat, 2) + math.pow(cos_lat_moy*delta_long, 2), 0.5)
+
+    return to_return
 
 
 def retrieving_mission():
@@ -31,7 +39,15 @@ def retrieving_mission():
     temp_mission_found = False
     while not temp_mission_found:
 
-        temp_mission = get_last_mission()
+        temp_mission = {
+            "id": 2,
+            "points": [
+                {"index": 0, "x": 48.121045, "y": -1.6451528, "z": 300},
+                {"index": 1, "x": 48.121545, "y": -1.6451528, "z": 300},
+                {"index": 2, "x": 48.122045, "y": -1.6451528, "z": 300}
+            ]
+        }
+        #get_last_mission()
         """
             {
             "id": 2,
@@ -100,8 +116,8 @@ def monitoring_mission(miss, dr):
             point = PointDeBase(drone_monitor["current_lat"], drone_monitor["current_lon"], drone_monitor["current_alt"])
             result_dto = ResultDTO(path_image, point.__dict__)
             send_photo(miss["id"], result_dto.__dict__)
-
             drone_monitor["a_change_position"] = False
+
         elif drone_monitor["a_atteint_point_final"]:
             print "reached end mission"
             # donne ordre de retourner se poser
@@ -126,8 +142,14 @@ def react_to_position(self, attr_name, msg):
         drone_monitor["current_lon"] = msg.lon
         drone_monitor["current_alt"] = msg.alt
 
-    if 5 > dist(drone_monitor["current_lat"], drone_monitor["current_lon"], msg.lat, msg.lon):
+    if 5 < dist(drone_monitor["current_lat"], drone_monitor["current_lon"], msg.lat, msg.lon):
+        print "dist ok: ", dist(drone_monitor["current_lat"], drone_monitor["current_lon"], msg.lat, msg.lon)
         drone_monitor["a_change_position"] = True
+        drone_monitor["current_lat"] = msg.lat
+        drone_monitor["current_lon"] = msg.lon
+        drone_monitor["current_alt"] = msg.alt
+    else:
+        print "dist ko: ", dist(drone_monitor["current_lat"], drone_monitor["current_lon"], msg.lat, msg.lon)
 
 
 if __name__ == '__main__':
@@ -135,7 +157,7 @@ if __name__ == '__main__':
     Script principal de récupération de mission, avant transmition au drône puis attente de la fn de la mission avant retour à l'attente de mission
     '''
 
-    filename = os.path.join(os.getcwd(), "../scripts/temp/camera_link_file.kml")
+    filename = os.path.join(os.getcwd(), "/tmp/camera_link_file.kml")
     command = "google-earth-pro " + filename
     print command
     args = shlex.split(command)

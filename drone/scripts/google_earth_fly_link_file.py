@@ -20,9 +20,9 @@ kml_template = '''<?xml version="1.0" encoding="UTF-8"?>
 
 
 def write_coord_xml(lat, lon, alt):
-    coord = {'longitude': lon,
-             'latitude': lat,
-             'altitude': alt,
+    coord = {'longitude': 10,
+             'latitude': 10,
+             'altitude': 999,
              'heading': 160.0 + 80,
              'tilt': 90.0}
     with open("/tmp/camera_tmp.kml", "w") as kml_file:
